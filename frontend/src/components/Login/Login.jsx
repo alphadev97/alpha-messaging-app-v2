@@ -69,7 +69,7 @@ const Login = () => {
                 )}
               </div>
             </div>
-            <div className={`${styles.normalFlex} justify-between`}>
+            <div className={`${styles.noramlFlex} justify-between`}>
               <div className={`${styles.noramlFlex}`}>
                 <input
                   type="checkbox"
@@ -84,7 +84,6 @@ const Login = () => {
                   Remember me
                 </label>
               </div>
-
               <div className="text-sm">
                 <a
                   href=".forgot-password"
