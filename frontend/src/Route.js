@@ -1,3 +1,3 @@
-import Login from "../src/pages/Login.jsx";
+import LoginPage from "../src/pages/LoginPage.jsx";
 
-export { Login };
+export { LoginPage };
