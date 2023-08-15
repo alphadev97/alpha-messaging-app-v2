@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import ErrorHandler from "./utils/ErrorHandler.js";
+import ErrorHandler from "./middleware/error.js";
 const app = express();
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
