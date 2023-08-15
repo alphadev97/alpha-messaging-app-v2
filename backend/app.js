@@ -4,12 +4,14 @@ import ErrorHandler from "./utils/ErrorHandler.js";
 const app = express();
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
-import fileUpload from "express-fileupload";
+import user from "./controller/userController.js";
+import cors from "cors";
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(fileUpload({ useTempFiles: true }));
+app.use(cors());
+app.use("/", express.static("uploads"));
+app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 
 // config
 if (process.env.NODE_ENV !== "PRODUCTION") {
@@ -17,6 +19,9 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
     path: "backend/config/.env",
   });
 }
+
+// import routes
+app.use("/api/v2/user", user);
 
 // ErrorHandling
 app.use(ErrorHandler);
