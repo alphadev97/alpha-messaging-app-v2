@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Multi-Vendor MERN Stack E-commerce Project",
   "main": "backend/server.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
