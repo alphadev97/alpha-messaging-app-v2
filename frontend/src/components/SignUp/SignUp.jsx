@@ -6,6 +6,7 @@ import { RxAvatar } from "react-icons/rx";
 import axios from "axios";
 import { server } from "../../server.js";
 import { config } from "dotenv";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -33,12 +34,14 @@ const SignUp = () => {
     axios
       .post(`${server}/user/create-user`, newForm, config)
       .then((res) => {
-        if (res.data.success === true) {
-          alert(res.message);
-        }
+        toast.success(res.data.message);
+        setName("");
+        setEmail("");
+        setPassword("");
+        setAvatar();
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err.response.data.message);
       });
   };
 

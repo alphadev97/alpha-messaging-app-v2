@@ -11,6 +11,8 @@ import sendToken from "../utils/JwtToken.js";
 
 const router = express.Router();
 
+// create user
+
 router.post("/create-user", upload.single("file"), async (req, res, next) => {
   const { name, email, password } = req.body;
   const userEmail = await userModel.findOne({ email });
@@ -106,5 +108,7 @@ router.post(
     }
   })
 );
+
+// login user
 
 export default router;
