@@ -7,6 +7,7 @@ import fs from "fs";
 import jwt from "jsonwebtoken";
 import sendMail from "../utils/sendMail.js";
 import catchAsyncErrors from "../middleware/catchAsyncErrors.js";
+import sendToken from "../utils/JwtToken.js";
 
 const router = express.Router();
 
@@ -23,8 +24,6 @@ router.post("/create-user", upload.single("file"), async (req, res, next) => {
         res.status(500).json({
           message: "Error in deleting file",
         });
-      } else {
-        res.json({ message: "File deleted successfully" });
       }
     });
     return next(new ErrorHandler("User already exists", 400));
@@ -78,25 +77,33 @@ router.post(
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { activation_token } = req.body;
+
       const newUser = jwt.verify(
         activation_token,
         process.env.ACTIVATION_SECRET
       );
 
       if (!newUser) {
-        return next(new ErrorHandler("Invalid Token, 400"));
+        return next(new ErrorHandler("Invalid token", 400));
       }
       const { name, email, password, avatar } = newUser;
 
-      userModel.create({
+      let user = await userModel.findOne({ email });
+
+      if (user) {
+        return next(new ErrorHandler("User already exists", 400));
+      }
+      user = await userModel.create({
         name,
         email,
         avatar,
         password,
       });
 
-      sendToken(newUser, 201, res);
-    } catch (error) {}
+      sendToken(user, 201, res);
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
   })
 );
 
