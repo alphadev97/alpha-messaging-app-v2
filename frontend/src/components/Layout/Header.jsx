@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import styles from "../../styles/styles";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
-import { productData } from "../../static/data";
+import { productData, categoriesData } from "../../static/data";
 import { AiOutlineSearch } from "react-icons/ai";
-import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
 import { BiMenuAltLeft } from "react-icons/bi";
+import DropDown from "./DropDown";
 
 const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchData, setSearchData] = useState(null);
   const [active, setActive] = useState(false);
+  const [dropDown, setDropDown] = useState(false);
 
   const handleSearchChange = (e) => {
     const term = e.target.value;
@@ -100,7 +102,22 @@ const Header = () => {
           <div>
             <div className="relative h-[60px] mt-[10px] w-[270px] hidden 1000px:block">
               <BiMenuAltLeft size={30} className="absolute top-3 left-2" />
-              <button></button>
+              <button
+                className={`h-[100%] w-full flex justify-between items-center pl-10 bg-white font-sans text-lg font-[500] select-none rounded-t-md`}
+              >
+                All Categories
+              </button>
+              <IoIosArrowDown
+                size={20}
+                className="absolute right-2 top-4 cursor-pointer"
+                onClick={() => setDropDown(!dropDown)}
+              />
+              {dropDown ? (
+                <DropDown
+                  categoriesData={categoriesData}
+                  setDropDown={setDropDown}
+                />
+              ) : null}
             </div>
           </div>
         </div>
