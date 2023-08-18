@@ -4,7 +4,7 @@ import Header from "../components/Layout/Header.jsx";
 const HomePage = () => {
   return (
     <div>
-      <Header />
+      <Header activeHeading={1} />
     </div>
   );
 };

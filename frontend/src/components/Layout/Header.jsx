@@ -7,8 +7,9 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
 import { BiMenuAltLeft } from "react-icons/bi";
 import DropDown from "./DropDown";
+import Navbar from "./Navbar";
 
-const Header = () => {
+const Header = ({ activeHeading }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchData, setSearchData] = useState(null);
   const [active, setActive] = useState(false);
@@ -119,6 +120,10 @@ const Header = () => {
                 />
               ) : null}
             </div>
+          </div>
+          {/* Nav Items */}
+          <div className={`${styles.noramlFlex} `}>
+            <Navbar active={activeHeading} />
           </div>
         </div>
       </div>
