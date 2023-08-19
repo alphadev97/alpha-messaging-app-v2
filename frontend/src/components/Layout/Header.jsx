@@ -3,7 +3,7 @@ import styles from "../../styles/styles";
 import { Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import { productData, categoriesData } from "../../static/data";
-import { AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineSearch, AiOutlineHeart } from "react-icons/ai";
 import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
 import { BiMenuAltLeft } from "react-icons/bi";
 import DropDown from "./DropDown";
@@ -124,6 +124,17 @@ const Header = ({ activeHeading }) => {
           {/* Nav Items */}
           <div className={`${styles.noramlFlex} `}>
             <Navbar active={activeHeading} />
+          </div>
+
+          <div>
+            <div className={`${styles.noramlFlex}`}>
+              <div className="relative cursor-pointer mr-[15px]">
+                <AiOutlineHeart size={30} color="rgb(255 255 255 / 83%)" />
+                <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
+                  1
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
