@@ -23,7 +23,7 @@ const Hero = () => {
           faucibus ornare tellus volutpat ante netus, nisi primis feugiat
           integer commodo vitae.
         </p>
-        <Link to={"/product"}>
+        <Link to={"/product"} className="inline-block">
           <div className={`${styles.button} mt-5`}>
             <span className="text-[#ffff] font-[Poppins] text-[18px]">
               Shop Now
