@@ -56,6 +56,14 @@ const ProductCard = ({ data }) => {
               size={20}
             />
           </div>
+
+          <div className="py-2 flex items-center justify-between">
+            <div className="flex">
+              <h5 className={`${styles.productDiscountPrice}`}>
+                ${data.price === 0 ? data.price : data.discount_price}
+              </h5>
+            </div>
+          </div>
         </Link>
       </div>
     </>
