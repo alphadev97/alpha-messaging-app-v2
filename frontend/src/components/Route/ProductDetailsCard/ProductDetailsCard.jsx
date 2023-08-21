@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import styles from "../../../styles/styles";
-import { AiOutlineMessage } from "react-icons/ai";
+import {
+  AiFillHeart,
+  AiOutlineHeart,
+  AiOutlineMessage,
+  AiOutlineShoppingCart,
+} from "react-icons/ai";
 
 const ProductDetailsCard = ({ setOpen, data }) => {
   const [count, setCount] = useState(1);
@@ -91,6 +96,34 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                       +
                     </button>
                   </div>
+
+                  <div>
+                    {click ? (
+                      <AiFillHeart
+                        size={30}
+                        className="cursor-pointer "
+                        onClick={() => setClick(!click)}
+                        color={click ? "red" : "#333"}
+                        title="Remove from wishlist"
+                      />
+                    ) : (
+                      <AiOutlineHeart
+                        size={30}
+                        className="cursor-pointer "
+                        onClick={() => setClick(!click)}
+                        color={click ? "red" : "#333"}
+                        title="Add to wishlist"
+                      />
+                    )}
+                  </div>
+                </div>
+                <div
+                  className={`${styles.button} mt-6 rounded-[4px] h-11 flex items-center`}
+                  onClick={() => addToCartHandler(data._id)}
+                >
+                  <span className="text-[#fff] flex items-center">
+                    Add to cart <AiOutlineShoppingCart className="ml-1" />
+                  </span>
                 </div>
               </div>
             </div>
