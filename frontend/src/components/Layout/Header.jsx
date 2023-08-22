@@ -162,7 +162,7 @@ const Header = ({ activeHeading }) => {
                   <Link to={"/profile"}>
                     <img
                       src={`${backend_url}${user.avatar}`}
-                      className="w-[40px] h-[40px] rounded-full border-[3px] border-[#fff]"
+                      className="w-[35px] h-[35px] rounded-full border-[1px] border-[#fff]"
                       alt=""
                     />
                   </Link>
