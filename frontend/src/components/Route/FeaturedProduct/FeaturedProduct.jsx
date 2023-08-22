@@ -14,7 +14,6 @@ const FeaturedProduct = () => {
           {productData &&
             productData.map((i, index) => <ProductCard data={i} key={index} />)}
         </div>
-        ;
       </div>
     </div>
   );
