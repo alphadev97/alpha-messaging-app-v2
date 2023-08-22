@@ -4,6 +4,7 @@ import styles from "../styles/styles";
 import { useSearchParams } from "react-router-dom";
 import { productData } from "../static/data";
 import ProductCard from "../components/Route/ProductCard/ProductCard";
+import Footer from "../components/Layout/Footer";
 
 const ProductsPage = () => {
   const [searchParams] = useSearchParams();
@@ -37,6 +38,7 @@ const ProductsPage = () => {
           </h1>
         ) : null}
       </div>
+      <Footer />
     </div>
   );
 };

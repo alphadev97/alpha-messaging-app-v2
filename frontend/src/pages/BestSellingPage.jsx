@@ -4,6 +4,7 @@ import styles from "../styles/styles";
 import { useSearchParams } from "react-router-dom";
 import { productData } from "../static/data";
 import ProductCard from "../components/Route/ProductCard/ProductCard";
+import Footer from "../components/Layout/Footer";
 
 const BestSellingPage = () => {
   const [data, setData] = useState([]);
@@ -24,6 +25,7 @@ const BestSellingPage = () => {
           {data && data.map((i, index) => <ProductCard data={i} key={index} />)}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
