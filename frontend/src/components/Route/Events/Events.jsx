@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "../../styles/styles";
-import EventCard from "./EventCard";
+import styles from "../../../styles/styles";
+import EventCard from "../Events/EventCard";
 
 const Events = () => {
   return (
