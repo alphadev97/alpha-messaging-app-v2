@@ -305,7 +305,7 @@ export const productData = [
       },
       {
         public_id: "test",
-        url: "https://m.media-amazon.com/images/I/31Vle5fVdaL.jpg",
+        url: "https://lahorecentre.com/wp-content/uploads/2023/02/iphone-14-pro-deeppurple-Memory-Built-in-128-256-512GB-1TB-Built-in-6GB-RAM-NVMe.jpg",
       },
     ],
     shop: {
