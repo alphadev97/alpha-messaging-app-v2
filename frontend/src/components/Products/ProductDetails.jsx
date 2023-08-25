@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "../../styles/styles";
 import {
   AiFillHeart,
@@ -254,6 +254,38 @@ const ProductDetailsInfo = ({ data }) => {
                 alt=""
                 className="w-[50px] h-[50px] rounded-full"
               />
+              <div className="pl-3">
+                <h3 className={`${styles.shop_name}`}>{data.shop.name}</h3>
+                <h5 className="pb-2 text-[15px]">
+                  ({data.shop.ratings}) Ratings
+                </h5>
+              </div>
+            </div>
+            <p className="pt-2">
+              Lorem ipsum dolor sit amet consectetur adipiscing elit egestas,
+              varius enim accumsan laoreet mi morbi diam imperdiet congue, urna
+              nunc elementum nullam vehicula suspendisse cursus. Sollicitudin
+              sociis
+            </p>
+          </div>
+          <div className="w-full 800px:w-[50%] mt-5 800px:mt-0 800px:flex flex-col items-end">
+            <div className="text-left">
+              <h5 className="font-[600]">
+                Joined on: <span className="font-[500]">25 March, 2023</span>
+              </h5>
+              <h5 className="font-[600] pt-3">
+                Total Products: <span className="font-[500]">1,233</span>
+              </h5>
+              <h5 className="font-[600] pt-3">
+                Total Reviews: <span className="font-[500]">324</span>
+              </h5>
+              <Link to={"/"}>
+                <div
+                  className={`${styles.button} !rounded-[4px] !h-[39.5px] mt-3`}
+                >
+                  <h4 className="text-white">Visit Shop</h4>
+                </div>
+              </Link>
             </div>
           </div>
         </div>
