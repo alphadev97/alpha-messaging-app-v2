@@ -286,6 +286,47 @@ const Header = ({ activeHeading }) => {
               </div>
 
               <Navbar active={activeHeading} />
+
+              <div className={`${styles.button} ml-4 !rounded-[4px]`}>
+                <Link to={"/seller"}>
+                  <h1 className="text-[#ffff] flex items-center">
+                    Become a Seller <IoIosArrowForward className="ml-1" />
+                  </h1>
+                </Link>
+              </div>
+
+              <br />
+              <br />
+              <br />
+
+              <div className="flex w-full justify-center">
+                {isAuthenticated ? (
+                  <div>
+                    <Link to={"/profile"}>
+                      <img
+                        src={`${backend_url}${user.avatar}`}
+                        alt=""
+                        className="w-[60px] h-[60px] rounded-full border-[3px] border-[#2affa6]"
+                      />
+                    </Link>
+                  </div>
+                ) : (
+                  <>
+                    <Link
+                      to={"/login"}
+                      className="text-[18px] pr-[10px] text-[#000000b7]"
+                    >
+                      Login
+                    </Link>
+                    <Link
+                      to={"/sign-up"}
+                      className="text-[18px] text-[#000000b7]"
+                    >
+                      Sign Up
+                    </Link>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         )}
