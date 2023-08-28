@@ -17,6 +17,7 @@ import { useSelector } from "react-redux";
 import { backend_url } from "../../server";
 import Cart from "../cart/Cart";
 import Wishlist from "../Wishlist/Wishlist";
+import { RxCross1 } from "react-icons/rx";
 
 const Header = ({ activeHeading }) => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -26,6 +27,7 @@ const Header = ({ activeHeading }) => {
   const [dropDown, setDropDown] = useState(false);
   const [openCart, setOpenCart] = useState(false);
   const [openWishlist, setOpenWishlist] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleSearchChange = (e) => {
     const term = e.target.value;
@@ -193,6 +195,97 @@ const Header = ({ activeHeading }) => {
             ) : null}
           </div>
         </div>
+      </div>
+
+      {/* Mobile Screen Header */}
+      <div
+        className={`${
+          active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
+        } w-full h-[60px] fixed bg-[#fff] z-50 top-0 left-0 shadow-sm 800px:hidden`}
+      >
+        <div className="w-full flex items-center justify-between">
+          <div>
+            <BiMenuAltLeft
+              size={40}
+              className="ml-4"
+              onClick={() => setOpen(true)}
+            />
+          </div>
+          <div>
+            <Link to={"/"}>
+              <img
+                src={logo}
+                alt="logo"
+                className="h-[50px] w-[120px] mt-1 cursor-pointer"
+              />
+            </Link>
+          </div>
+          <div>
+            <div className="relative mr-[20px]">
+              <AiOutlineShoppingCart size={30} />
+              <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
+                1
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Header sidebar */}
+        {open && (
+          <div
+            className={`fixed w-full bg-[#0000005f] z-20 h-full top-0 left-0`}
+          >
+            <div className="fixed w-[60%] bg-[#fff] h-screen top-0 left-0 z-10 overflow-y-scroll">
+              <div className="w-full justify-between flex pr-3 ">
+                <div>
+                  <div className="relative mr-[15px]">
+                    <AiOutlineHeart size={30} className="mt-5 ml-3" />
+                    <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
+                      0
+                    </span>
+                  </div>
+                </div>
+
+                <RxCross1
+                  size={30}
+                  className="ml-4 mt-5"
+                  onClick={() => setOpen(false)}
+                />
+              </div>
+
+              <div className="my-8 w-[92%] m-auto h-[40px]">
+                <input
+                  type="search"
+                  placeholder="Search Product....."
+                  className="h-[40px] w-full px-2 border-[#3957db] border-[2px] rounded-md"
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                />
+              </div>
+              {searchData && searchData.length !== 0 ? (
+                <div className="absolute min-h-[30vh] bg-slate-50 shadow-sm-2 z-[9] p-4">
+                  {searchData &&
+                    searchData.map((i, index) => {
+                      const d = i.name;
+                      const product_name = d.replace(/\s+/g, "-");
+                      return (
+                        <Link to={`/product/${product_name}`}>
+                          <div className="w-full flex items-start py-3">
+                            <img
+                              src={i.image_Url[0].url}
+                              alt=""
+                              className="w-[40px] h-[40px] mr-[10px]"
+                            />
+                            <h1>{i.name}</h1>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                </div>
+              ) : null}
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
