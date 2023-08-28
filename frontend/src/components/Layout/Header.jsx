@@ -261,28 +261,31 @@ const Header = ({ activeHeading }) => {
                   value={searchTerm}
                   onChange={handleSearchChange}
                 />
+
+                {searchData && searchData.length !== 0 ? (
+                  <div className="absolute min-h-[30vh] bg-slate-50 shadow-sm-2 z-[9] p-4">
+                    {searchData &&
+                      searchData.map((i, index) => {
+                        const d = i.name;
+                        const product_name = d.replace(/\s+/g, "-");
+                        return (
+                          <Link to={`/product/${product_name}`}>
+                            <div className="w-full flex items-start py-3">
+                              <img
+                                src={i.image_Url[0].url}
+                                alt=""
+                                className="w-[40px] h-[40px] mr-[10px]"
+                              />
+                              <h1>{i.name}</h1>
+                            </div>
+                          </Link>
+                        );
+                      })}
+                  </div>
+                ) : null}
               </div>
-              {searchData && searchData.length !== 0 ? (
-                <div className="absolute min-h-[30vh] bg-slate-50 shadow-sm-2 z-[9] p-4">
-                  {searchData &&
-                    searchData.map((i, index) => {
-                      const d = i.name;
-                      const product_name = d.replace(/\s+/g, "-");
-                      return (
-                        <Link to={`/product/${product_name}`}>
-                          <div className="w-full flex items-start py-3">
-                            <img
-                              src={i.image_Url[0].url}
-                              alt=""
-                              className="w-[40px] h-[40px] mr-[10px]"
-                            />
-                            <h1>{i.name}</h1>
-                          </div>
-                        </Link>
-                      );
-                    })}
-                </div>
-              ) : null}
+
+              <Navbar active={activeHeading} />
             </div>
           </div>
         )}
