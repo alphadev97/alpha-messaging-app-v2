@@ -19,9 +19,10 @@ import "react-toastify/dist/ReactToastify.css";
 import Store from "./redux/store";
 import { loadUser } from "./redux/actions/userAction";
 import { useSelector } from "react-redux";
+import ProtectedRoute from "./ProtectedRoute";
 
 const App = () => {
-  const { loading } = useSelector((state) => state.user);
+  const { loading, isAuthenticated } = useSelector((state) => state.user);
 
   useEffect(() => {
     Store.dispatch(loadUser());
@@ -45,7 +46,14 @@ const App = () => {
             <Route path="/events" element={<EventsPage />} />
             <Route path="/faq" element={<FAQPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <ProfilePage />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
           <ToastContainer
             position="bottom-center"
