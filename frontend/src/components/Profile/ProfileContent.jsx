@@ -13,6 +13,10 @@ const ProfileContent = ({ active }) => {
   const [address1, setAddress1] = useState("");
   const [address2, setAddress2] = useState("");
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className="w-full">
       {/* Profile Page */}
@@ -33,7 +37,7 @@ const ProfileContent = ({ active }) => {
           <br />
           <br />
           <div className="w-full px-5">
-            <form>
+            <form onSubmit={handleSubmit} aria-required={true}>
               <div className="w-full flex pb-3">
                 <div className="w-[50%]">
                   <label className="block pb-2">Full Name</label>
