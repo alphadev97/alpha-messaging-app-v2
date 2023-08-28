@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { backend_url } from "../../server";
 import { useSelector } from "react-redux";
-import { AiOutlineArrowRight, AiOutlineCamera } from "react-icons/ai";
+import {
+  AiOutlineArrowRight,
+  AiOutlineCamera,
+  AiOutlineDelete,
+} from "react-icons/ai";
 import styles from "../../styles/styles";
 import { Link } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
@@ -143,6 +147,13 @@ const ProfileContent = ({ active }) => {
       {active === 5 && (
         <div>
           <TrackOrder />
+        </div>
+      )}
+
+      {/* Payment Methods Page */}
+      {active === 6 && (
+        <div>
+          <PaymentMethod />
         </div>
       )}
     </div>
@@ -421,6 +432,39 @@ const TrackOrder = () => {
         disableRowSelectionOnClick
         autoHeight
       />
+    </div>
+  );
+};
+
+const PaymentMethod = () => {
+  return (
+    <div className="w-ful px-5">
+      <div className="flex w-full items-center justify-between">
+        <h1 className="text-[25px] font-[600] text-[#000000ba] pb-2">
+          Payment Methods
+        </h1>
+        <div className={`${styles.button} !rounded-md`}>
+          <span className="text-[#fff]">Add New</span>
+        </div>
+      </div>
+      <br />
+      <div className="w-full bg-white h-[70px] rounded-[4px] flex items-center px-3 shadow justify-between pr-10">
+        <div className="flex items-center">
+          <img
+            src="https://logos-world.net/wp-content/uploads/2020/06/Visa-Logo-2006.png"
+            alt=""
+            className="h-[50px]"
+          />
+          <h5 className="pl-5 font-[600]">Muhammad Usama</h5>
+        </div>
+        <div className="pl-8 flex items-center ">
+          <h6>1234 **** *** ****</h6>
+          <h5 className="pl-6">09/2023</h5>
+        </div>
+        <div className="min-w-[10%] flex items-center justify-between pl-8">
+          <AiOutlineDelete size={25} className="cursor-pointer" />
+        </div>
+      </div>
     </div>
   );
 };
