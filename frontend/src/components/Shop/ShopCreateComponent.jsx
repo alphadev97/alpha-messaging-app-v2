@@ -20,23 +20,30 @@ const ShopCreateComponent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const config = { headers: { "Content-Type": "multipart/form-data" } };
 
-    await axios
-      .post(
-        `${server}/user/login-user`,
-        {
-          email,
-          password,
-        },
-        { withCredentials: true }
-      )
+    const newForm = new FormData();
+    newForm.append("file", avatar);
+    newForm.append("name", name);
+    newForm.append("email", email);
+    newForm.append("password", password);
+    newForm.append("phoneNumber", phoneNumber);
+    newForm.append("address", address);
+    newForm.append("zipCode", zipCode);
+
+    axios
+      .post(`${server}/shop/create-shop`, newForm, config)
       .then((res) => {
-        toast.success("Login Success!");
-        navigate("/");
-        window.location.reload(true);
+        toast.success(res.data.message);
+        setName("");
+        setEmail("");
+        setPassword("");
+        setAvatar();
+        setZipCode();
+        setAddress("");
+        setPhoneNumber();
       })
       .catch((err) => {
-        console.log(err.response.data);
         toast.error(err.response.data.message);
       });
   };

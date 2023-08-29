@@ -5,6 +5,7 @@ const app = express();
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import user from "./controller/userController.js";
+import shop from "./controller/shopController.js";
 import cors from "cors";
 
 app.use(express.json());
@@ -27,6 +28,7 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
 
 // import routes
 app.use("/api/v2/user", user);
+app.use("/api/v2/shop", shop);
 
 // ErrorHandling
 app.use(ErrorHandler);
