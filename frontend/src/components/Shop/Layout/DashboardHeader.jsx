@@ -56,7 +56,7 @@ const DashboardHeader = () => {
             <img
               src={`${backend_url}${seller.avatar}`}
               alt=""
-              className="w-[50px] h-[50px] rounded-full object-cover"
+              className="w-[40px] h-[40px] rounded-full object-cover mx-5 "
             />
           </Link>
         </div>
