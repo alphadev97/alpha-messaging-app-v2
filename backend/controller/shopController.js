@@ -6,7 +6,7 @@ import fs from "fs";
 import jwt from "jsonwebtoken";
 import sendMail from "../utils/sendMail.js";
 import sendToken from "../utils/JwtToken.js";
-import { isAuthenticated } from "../middleware/auth.js";
+import { isAuthenticated, isSeller } from "../middleware/auth.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
 import shopModel from "../model/shopModel.js";
 import catchAsyncErrors from "../middleware/catchAsyncErrors.js";
@@ -140,6 +140,28 @@ router.post(
       }
 
       sendShopToken(seller, 201, res);
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+// Load shop
+router.get(
+  "/getSeller",
+  isSeller,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const seller = await shopModel.findById(req.seller._id);
+
+      if (!seller) {
+        return next(new ErrorHandler("Seller doesn't exists!", 400));
+      }
+
+      res.status(200).json({
+        success: true,
+        seller,
+      });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
     }
