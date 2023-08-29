@@ -53,7 +53,7 @@ const ShopCreateComponent = () => {
           Register as a seller
         </h2>
       </div>
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-[35rem]">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
@@ -228,9 +228,9 @@ const ShopCreateComponent = () => {
               </button>
             </div>
             <div className={`${styles.noramlFlex} w-full`}>
-              <h4>Not have any account?</h4>
-              <Link to="/sign-up" className="text-blue-600 pl-2">
-                Sign Up
+              <h4>Already have an account?</h4>
+              <Link to="/shop-login" className="text-blue-600 pl-2">
+                Shop Login
               </Link>
             </div>
           </form>
