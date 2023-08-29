@@ -15,6 +15,7 @@ import {
   ProfilePage,
   ShopCreate,
   SellerActivationPage,
+  ShopLoginPage,
 } from "./Route.js";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -68,6 +69,7 @@ const App = () => {
               }
             />
             <Route path="/shop-create" element={<ShopCreate />} />
+            <Route path="/shop-login" element={<ShopLoginPage />} />
           </Routes>
           <ToastContainer
             position="bottom-center"

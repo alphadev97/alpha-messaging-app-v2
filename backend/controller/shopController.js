@@ -10,7 +10,9 @@ import { isAuthenticated } from "../middleware/auth.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
 import shopModel from "../model/shopModel.js";
 import catchAsyncErrors from "../middleware/catchAsyncErrors.js";
+import sendShopToken from "../utils/shopToken.js";
 
+// Create Shop
 router.post("/create-shop", upload.single("file"), async (req, res, next) => {
   try {
     const { email } = req.body;
@@ -105,7 +107,39 @@ router.post(
         zipCode,
       });
 
-      sendToken(seller, 201, res);
+      sendShopToken(seller, 201, res);
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+// Login Shop
+router.post(
+  "/login-shop",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const { email, password } = req.body;
+
+      if (!email || !password) {
+        return next(new ErrorHandler("Please provide the all fields!", 400));
+      }
+
+      const seller = await shopModel.findOne({ email }).select("+password");
+
+      if (!seller) {
+        return next(new ErrorHandler("User doesn't exists!", 400));
+      }
+
+      const isPasswordValid = await seller.comparePassword(password);
+
+      if (!isPasswordValid) {
+        return next(
+          new ErrorHandler("Please provide correct information!", 400)
+        );
+      }
+
+      sendShopToken(seller, 201, res);
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
     }
