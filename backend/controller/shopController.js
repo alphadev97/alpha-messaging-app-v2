@@ -74,7 +74,7 @@ const createActivationToken = (seller) => {
 
 // activate user
 router.post(
-  "/shop/activation",
+  "/activation",
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { activation_token } = req.body;
@@ -93,7 +93,7 @@ router.post(
       let seller = await shopModel.findOne({ email });
 
       if (seller) {
-        return next(new ErrorHandler("User already exists", 400));
+        return next(new ErrorHandler("Seller already exists", 400));
       }
       seller = await shopModel.create({
         name,
