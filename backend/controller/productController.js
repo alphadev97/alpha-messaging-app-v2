@@ -4,6 +4,7 @@ import upload from "../multer.js";
 import catchAsyncErrors from "../middleware/catchAsyncErrors.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
 import shopModel from "../model/shopModel.js";
+import { isSeller } from "../middleware/auth.js";
 const router = express.Router();
 
 // create product
@@ -34,6 +35,47 @@ router.post(
           product,
         });
       }
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
+
+// get all products of a shop
+router.get(
+  "/get-all-products-shop/:id",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const products = await productModel.find({ shopId: req.params.id });
+
+      res.status(201).json({
+        success: true,
+        products,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
+
+// delete product of a shop
+router.delete(
+  "/delete-shop-product/:id",
+  isSeller,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const productId = req.params.id;
+
+      const product = await productModel.findByIdAndDelete(productId);
+
+      if (!product) {
+        return next(new ErrorHandler("Product not found with this id!", 500));
+      }
+
+      res.status(201).json({
+        success: true,
+        product,
+      });
     } catch (error) {
       return next(new ErrorHandler(error, 400));
     }
