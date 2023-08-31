@@ -19,12 +19,13 @@ router.post(
         return next(new ErrorHandler("Shop Id is invalid", 400));
       } else {
         const files = req.files;
-        const imageUrls = files.map((file) => `${file.fileName}`);
+        const imageUrls = files.map((file) => `${file.filename}`);
         const productData = req.body;
         productData.images = imageUrls;
         productData.shop = shop;
 
-        const product = await productModel(productData);
+        const product = new productModel(productData);
+        await product.save();
 
         res.status(201).json({
           success: true,
