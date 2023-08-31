@@ -1,5 +1,5 @@
 // create product
-import { axios } from "axios";
+import axios from "axios";
 import { server } from "../../server";
 export const createProduct = (newForm) => async (dispatch) => {
   try {
