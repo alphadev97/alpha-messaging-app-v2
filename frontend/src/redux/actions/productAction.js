@@ -52,5 +52,25 @@ export const getAllProductsShop = (id) => async (dispatch) => {
 // delete product of a shop
 export const deleteProduct = (id) => async (dispatch) => {
   try {
-  } catch (error) {}
+    dispatch({
+      type: "deleteProductRequest",
+    });
+
+    const { data } = await axios.delete(
+      `${server}/product/delete-shop-product/${id}`,
+      {
+        withCredentials: true,
+      }
+    );
+
+    dispatch({
+      type: "deleteProductSuccess",
+      payload: data.message,
+    });
+  } catch (error) {
+    dispatch({
+      type: "deleteProductFailed",
+      payload: error.response.data.message,
+    });
+  }
 };
