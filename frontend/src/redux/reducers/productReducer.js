@@ -31,6 +31,11 @@ export const productReducer = createReducer(initialState, {
     state.error = action.payload;
   },
 
+  // delete product of a shop
+  deleteProductRequest: (state) => {
+    state.isLoading = true;
+  },
+
   clearErrors: (state) => {
     state.error = null;
   },
