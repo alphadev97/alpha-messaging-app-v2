@@ -24,8 +24,10 @@ router.post(
         productData.images = imageUrls;
         productData.shop = shop;
 
-        const product = new productModel(productData);
-        await product.save();
+        // const product = new productModel(productData);
+        // await product.save();
+
+        const product = await productModel.create(productData);
 
         res.status(201).json({
           success: true,
