@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 import user from "./controller/userController.js";
 import shop from "./controller/shopController.js";
 import product from "./controller/productController.js";
+import event from "./controller/eventController.js";
 import cors from "cors";
 
 app.use(express.json());
@@ -31,6 +32,7 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
 app.use("/api/v2/user", user);
 app.use("/api/v2/shop", shop);
 app.use("/api/v2/product", product);
+app.use("/api/v2/event", event);
 
 // ErrorHandling
 app.use(ErrorHandler);

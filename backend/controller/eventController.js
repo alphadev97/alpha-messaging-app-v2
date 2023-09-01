@@ -2,11 +2,11 @@ import express from "express";
 import catchAsyncErrors from "../middleware/catchAsyncErrors.js";
 import upload from "../multer.js";
 import shopModel from "../model/shopModel.js";
-import eventModel from "../model/eventModel";
+import eventModel from "../model/eventModel.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
 const router = express.Router();
 
-// create product
+// create event
 router.post(
   "/create-event",
   upload.array("images"),
