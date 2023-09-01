@@ -5,10 +5,11 @@ import { categoriesData } from "../../static/data";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { createProduct } from "../../redux/actions/productAction";
 import { toast } from "react-toastify";
+import { createEvent } from "../../redux/actions/eventAction";
 
 const CreateEvent = () => {
   const { seller } = useSelector((state) => state.seller);
-  const { success, error } = useSelector((state) => state.products);
+  const { success, error } = useSelector((state) => state.events);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [images, setImages] = useState([]);
@@ -79,8 +80,10 @@ const CreateEvent = () => {
     newForm.append("discountPrice", discountPrice);
     newForm.append("stock", stock);
     newForm.append("shopId", seller._id);
+    newForm.append("start_Date", startDate.toISOString());
+    newForm.append("Finish_Date", endDate.toISOString());
 
-    dispatch(createProduct(newForm));
+    dispatch(createEvent(newForm));
   };
 
   return (
@@ -229,7 +232,7 @@ const CreateEvent = () => {
           <input
             type="date"
             name="price"
-            id="start-date"
+            id="end-date"
             value={endDate ? endDate.toISOString().slice(0, 10) : ""}
             className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
             onChange={handleEndDate}
