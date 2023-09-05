@@ -11,6 +11,9 @@ import Loader from "../Layout/Loader";
 import { DataGrid } from "@mui/x-data-grid";
 import styles from "../../styles/styles";
 import { RxCross1 } from "react-icons/rx";
+import axios from "axios";
+import { server } from "../../server";
+import { toast } from "react-toastify";
 
 const AllCouponCodes = () => {
   const [open, setOpen] = useState(false);
@@ -18,7 +21,7 @@ const AllCouponCodes = () => {
   const [value, setValue] = useState(null);
   const [minAmount, setMinAmount] = useState(null);
   const [maxAmount, setMaxAmount] = useState(null);
-  const [selectedProducts, setSelectedProducts] = useState("");
+  const [selectedProducts, setSelectedProducts] = useState(null);
   const { products, isLoading } = useSelector((state) => state.products);
   const { seller } = useSelector((state) => state.seller);
 
@@ -33,7 +36,29 @@ const AllCouponCodes = () => {
     window.location.reload();
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    await axios
+      .post(
+        `${server}/coupon/create-coupon-code`,
+        {
+          name,
+          minAmount,
+          maxAmount,
+          selectedProducts,
+          value,
+          shop: seller,
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+      });
+  };
 
   const columns = [
     { field: "id", headerName: "Product Id", minWidth: 150, flex: 0.7 },
@@ -136,8 +161,8 @@ const AllCouponCodes = () => {
             autoHeight
           />
           {open && (
-            <div className="fixed top-0 left-0 w-full h-screen bg-[#0000007a] z-[2000] flex items-center justify-center">
-              <div className="w-[90%] 800px:w-[40%] h-[80vh] bg-white rounded-md shadow p-4">
+            <div className="fixed top-0 left-0 w-full h-screen bg-[#0000007a] z-[2000] flex items-center justify-center ">
+              <div className="w-[90%] 800px:w-[40%] h-[80vh] bg-white rounded-md shadow p-4 overflow-x-scroll">
                 <div className="w-full flex justify-end">
                   <RxCross1
                     size={30}
@@ -149,7 +174,7 @@ const AllCouponCodes = () => {
                   Create Coupon Code
                 </h5>
                 {/* Create coupon code */}
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} aria-required={true}>
                   <br />
                   <div>
                     <label className="pb-2">
@@ -227,6 +252,15 @@ const AllCouponCodes = () => {
                           </option>
                         ))}
                     </select>
+                  </div>
+
+                  <br />
+                  <div>
+                    <input
+                      type="submit"
+                      value="Create"
+                      className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                    />
                   </div>
                 </form>
               </div>

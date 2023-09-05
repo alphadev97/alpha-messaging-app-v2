@@ -8,6 +8,7 @@ import user from "./controller/userController.js";
 import shop from "./controller/shopController.js";
 import product from "./controller/productController.js";
 import event from "./controller/eventController.js";
+import coupon from "./controller/couponCodeController.js";
 import cors from "cors";
 
 app.use(express.json());
@@ -33,6 +34,7 @@ app.use("/api/v2/user", user);
 app.use("/api/v2/shop", shop);
 app.use("/api/v2/product", product);
 app.use("/api/v2/event", event);
+app.use("/api/v2/coupon", coupon);
 
 // ErrorHandling
 app.use(ErrorHandler);

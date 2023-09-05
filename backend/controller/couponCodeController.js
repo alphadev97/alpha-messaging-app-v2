@@ -14,7 +14,7 @@ router.post(
     try {
       const isCouponCode = await couponCodeModel.find({ name: req.body.name });
 
-      if (isCouponCode) {
+      if (isCouponCode.length !== 0) {
         return next(new ErrorHandler("Coupon code already exist!", 400));
       }
 
@@ -29,3 +29,5 @@ router.post(
     }
   })
 );
+
+export default router;
