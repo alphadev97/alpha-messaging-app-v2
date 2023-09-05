@@ -4,6 +4,7 @@ import upload from "../multer.js";
 import shopModel from "../model/shopModel.js";
 import eventModel from "../model/eventModel.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
+import { isSeller } from "../middleware/auth.js";
 const router = express.Router();
 
 // create event
@@ -34,6 +35,47 @@ router.post(
           product,
         });
       }
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
+
+// get all events of a shop
+router.get(
+  "/get-all-events/:id",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const events = await eventModel.find({ shopId: req.params.id });
+
+      res.status(201).json({
+        success: true,
+        events,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
+
+// delete product of a shop
+router.delete(
+  "/delete-shop-event/:id",
+  isSeller,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const eventId = req.params.id;
+
+      const event = await eventModel.findByIdAndDelete(eventId);
+
+      if (!event) {
+        return next(new ErrorHandler("Event not found with this id!", 500));
+      }
+
+      res.status(201).json({
+        success: true,
+        message: "Event deleted successfully!",
+      });
     } catch (error) {
       return next(new ErrorHandler(error, 400));
     }
