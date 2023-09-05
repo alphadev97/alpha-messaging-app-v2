@@ -53,7 +53,7 @@ const AllCouponCodes = () => {
         { withCredentials: true }
       )
       .then((res) => {
-        console.log(res.data);
+        toast.success("Coupon Code created successfully!");
       })
       .catch((error) => {
         toast.error(error.response.data.message);
