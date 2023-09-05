@@ -16,6 +16,7 @@ const AllCouponCodes = () => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [value, setValue] = useState();
+  const [minAmount, setMinAmount] = useState();
   const { products, isLoading } = useSelector((state) => state.products);
   const { seller } = useSelector((state) => state.seller);
 
@@ -156,6 +157,7 @@ const AllCouponCodes = () => {
                       type="text"
                       name="name"
                       value={name}
+                      required
                       className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Enter your coupon code name"
@@ -169,11 +171,25 @@ const AllCouponCodes = () => {
                       <span className="text-red-500">*</span>
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       name="value"
                       value={value}
+                      required
                       className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
                       onChange={(e) => setValue(e.target.value)}
+                      placeholder="Enter your coupon code value"
+                    />
+                  </div>
+
+                  <br />
+                  <div>
+                    <label className="pb-2">Minimum Amount</label>
+                    <input
+                      type="number"
+                      name="value"
+                      value={minAmount}
+                      className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                      onChange={(e) => setMinAmount(e.target.value)}
                       placeholder="Enter your coupon code value"
                     />
                   </div>
