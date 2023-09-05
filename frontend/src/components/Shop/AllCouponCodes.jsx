@@ -19,16 +19,31 @@ const AllCouponCodes = () => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [value, setValue] = useState(null);
+  const [coupons, setCoupons] = useState([]);
   const [minAmount, setMinAmount] = useState(null);
   const [maxAmount, setMaxAmount] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState(null);
-  const { products, isLoading } = useSelector((state) => state.products);
+
+  //   const { products, isLoading } = useSelector((state) => state.products);
   const { seller } = useSelector((state) => state.seller);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllProductsShop(seller._id));
+    setIsLoading(true);
+    axios
+      .get(`${server}/coupon/get-coupon/${seller._id}`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setIsLoading(false);
+        console.log(res.data);
+        setCoupons(res.data);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+      });
   }, [dispatch]);
 
   const handleDelete = (id) => {
@@ -54,6 +69,8 @@ const AllCouponCodes = () => {
       )
       .then((res) => {
         toast.success("Coupon Code created successfully!");
+        setOpen(false);
+        window.location.reload();
       })
       .catch((error) => {
         toast.error(error.response.data.message);
@@ -73,39 +90,6 @@ const AllCouponCodes = () => {
       headerName: "Price",
       minWidth: 180,
       flex: 0.6,
-    },
-    {
-      field: "Stock",
-      headerName: "Stock",
-      minWidth: 80,
-      flex: 0.5,
-    },
-    {
-      field: "sold",
-      headerName: "Sold out",
-      minWidth: 130,
-      flex: 0.6,
-    },
-    {
-      field: "Preview",
-      flex: 0.8,
-      minWidth: 100,
-      headerName: "",
-      type: "Number",
-      sortable: false,
-      renderCell: (params) => {
-        const d = params.row.name;
-        const product_name = d.replace(/\s+/g, "-");
-        return (
-          <>
-            <Link to={`/product/${product_name}`}>
-              <Button>
-                <AiOutlineEye size={20} />
-              </Button>
-            </Link>
-          </>
-        );
-      },
     },
     {
       field: "Delete",
@@ -128,13 +112,12 @@ const AllCouponCodes = () => {
 
   const row = [];
 
-  products &&
-    products.forEach((item) => {
+  coupons &&
+    coupons.forEach((item) => {
       row.push({
         id: item._id,
         name: item.name,
-        price: "US$ " + item.discountPrice,
-        Stock: item.stock,
+        price: item.value,
         sold: 10,
       });
     });

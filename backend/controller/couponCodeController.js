@@ -30,4 +30,26 @@ router.post(
   })
 );
 
+// get all coupon codes of a shop
+router.get(
+  "/get-coupon/:id",
+  isSeller,
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const couponCodes = await couponCodeModel.find({
+        shop: {
+          _id: req.params.id,
+        },
+      });
+
+      res.status(201).json({
+        success: true,
+        couponCodes,
+      });
+    } catch (error) {
+      return next(new ErrorHandler(error, 400));
+    }
+  })
+);
+
 export default router;
