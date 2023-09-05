@@ -15,9 +15,10 @@ import { RxCross1 } from "react-icons/rx";
 const AllCouponCodes = () => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
-  const [value, setValue] = useState();
-  const [minAmount, setMinAmount] = useState();
-  const [maxAmount, setMaxAmount] = useState();
+  const [value, setValue] = useState(null);
+  const [minAmount, setMinAmount] = useState(null);
+  const [maxAmount, setMaxAmount] = useState(null);
+  const [selectedProducts, setSelectedProducts] = useState("");
   const { products, isLoading } = useSelector((state) => state.products);
   const { seller } = useSelector((state) => state.seller);
 
@@ -206,6 +207,26 @@ const AllCouponCodes = () => {
                       onChange={(e) => setMaxAmount(e.target.value)}
                       placeholder="Enter your coupon max amount"
                     />
+                  </div>
+
+                  <br />
+                  <div>
+                    <label className="pb-2">Selected Product</label>
+                    <select
+                      className="w-full mt-2 border h-[35px] rounded-[5px]"
+                      value={selectedProducts}
+                      onChange={(e) => setSelectedProducts(e.target.value)}
+                    >
+                      <option value="Choose your selected products">
+                        Choose a selected product
+                      </option>
+                      {products &&
+                        products.map((i) => (
+                          <option value={i.name} key={i.name}>
+                            {i.name}
+                          </option>
+                        ))}
+                    </select>
                   </div>
                 </form>
               </div>
