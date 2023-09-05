@@ -5,6 +5,7 @@ import shopModel from "../model/shopModel.js";
 import eventModel from "../model/eventModel.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
 import { isSeller } from "../middleware/auth.js";
+import fs from "fs";
 const router = express.Router();
 
 // create event
@@ -58,13 +59,26 @@ router.get(
   })
 );
 
-// delete product of a shop
+// delete event of a shop
 router.delete(
   "/delete-shop-event/:id",
   isSeller,
   catchAsyncErrors(async (req, res, next) => {
     try {
       const eventId = req.params.id;
+
+      const eventData = await eventModel.findById(eventId);
+
+      eventData.images.forEach((imageUrl) => {
+        const filename = imageUrl;
+        const filePath = `uploads/${filename}`;
+
+        fs.unlink(filePath, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+      });
 
       const event = await eventModel.findByIdAndDelete(eventId);
 

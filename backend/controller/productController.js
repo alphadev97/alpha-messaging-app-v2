@@ -5,6 +5,7 @@ import catchAsyncErrors from "../middleware/catchAsyncErrors.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
 import shopModel from "../model/shopModel.js";
 import { isSeller } from "../middleware/auth.js";
+import fs from "fs";
 const router = express.Router();
 
 // create product
@@ -65,6 +66,19 @@ router.delete(
   catchAsyncErrors(async (req, res, next) => {
     try {
       const productId = req.params.id;
+
+      const productData = await productModel.findById(productId);
+
+      productData.images.forEach((imageUrl) => {
+        const filename = imageUrl;
+        const filePath = `uploads/${filename}`;
+
+        fs.unlink(filePath, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+      });
 
       const product = await productModel.findByIdAndDelete(productId);
 
