@@ -17,6 +17,7 @@ const AllCouponCodes = () => {
   const [name, setName] = useState("");
   const [value, setValue] = useState();
   const [minAmount, setMinAmount] = useState();
+  const [maxAmount, setMaxAmount] = useState();
   const { products, isLoading } = useSelector((state) => state.products);
   const { seller } = useSelector((state) => state.seller);
 
@@ -190,7 +191,20 @@ const AllCouponCodes = () => {
                       value={minAmount}
                       className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
                       onChange={(e) => setMinAmount(e.target.value)}
-                      placeholder="Enter your coupon code value"
+                      placeholder="Enter your coupon min amount"
+                    />
+                  </div>
+
+                  <br />
+                  <div>
+                    <label className="pb-2">Maximum Amount</label>
+                    <input
+                      type="number"
+                      name="value"
+                      value={maxAmount}
+                      className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                      onChange={(e) => setMaxAmount(e.target.value)}
+                      placeholder="Enter your coupon max amount"
                     />
                   </div>
                 </form>
