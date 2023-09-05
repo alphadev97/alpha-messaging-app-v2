@@ -10,9 +10,12 @@ import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import Loader from "../Layout/Loader";
 import { DataGrid } from "@mui/x-data-grid";
 import styles from "../../styles/styles";
+import { RxCross1 } from "react-icons/rx";
 
 const AllCouponCodes = () => {
   const [open, setOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [value, setValue] = useState();
   const { products, isLoading } = useSelector((state) => state.products);
   const { seller } = useSelector((state) => state.seller);
 
@@ -26,6 +29,8 @@ const AllCouponCodes = () => {
     dispatch(deleteProduct(id));
     window.location.reload();
   };
+
+  const handleSubmit = () => {};
 
   const columns = [
     { field: "id", headerName: "Product Id", minWidth: 150, flex: 0.7 },
@@ -128,7 +133,53 @@ const AllCouponCodes = () => {
             autoHeight
           />
           {open && (
-            <div className="fixed top-0 left-0 w-full h-screen bg-[#0000007a] z-[2000]"></div>
+            <div className="fixed top-0 left-0 w-full h-screen bg-[#0000007a] z-[2000] flex items-center justify-center">
+              <div className="w-[90%] 800px:w-[40%] h-[80vh] bg-white rounded-md shadow p-4">
+                <div className="w-full flex justify-end">
+                  <RxCross1
+                    size={30}
+                    className="cursor-pointer"
+                    onClick={() => setOpen(false)}
+                  />
+                </div>
+                <h5 className="text-[30px] font-Poppins text-center">
+                  Create Coupon Code
+                </h5>
+                {/* Create coupon code */}
+                <form onSubmit={handleSubmit}>
+                  <br />
+                  <div>
+                    <label className="pb-2">
+                      Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={name}
+                      className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Enter your coupon code name"
+                    />
+                  </div>
+
+                  <br />
+                  <div>
+                    <label className="pb-2">
+                      Discount Percentage{" "}
+                      <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="value"
+                      value={value}
+                      className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                      onChange={(e) => setValue(e.target.value)}
+                      placeholder="Enter your coupon code value"
+                    />
+                  </div>
+                </form>
+              </div>
+            </div>
           )}
         </div>
       )}
