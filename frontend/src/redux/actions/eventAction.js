@@ -47,3 +47,29 @@ export const getAllEventsShop = (id) => async (dispatch) => {
     });
   }
 };
+
+// delete event of a shop
+export const deleteEvent = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "deleteEventRequest",
+    });
+
+    const { data } = await axios.delete(
+      `${server}/event/delete-shop-event/${id}`,
+      {
+        withCredentials: true,
+      }
+    );
+
+    dispatch({
+      type: "deleteEventSuccess",
+      payload: data.message,
+    });
+  } catch (error) {
+    dispatch({
+      type: "deleteEventFailed",
+      payload: error.response.data.message,
+    });
+  }
+};

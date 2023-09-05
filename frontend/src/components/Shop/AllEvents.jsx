@@ -9,10 +9,10 @@ import { Button } from "@mui/material";
 import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import Loader from "../Layout/Loader";
 import { DataGrid } from "@mui/x-data-grid";
-import { getAllEventsShop } from "../../redux/actions/eventAction";
+import { deleteEvent, getAllEventsShop } from "../../redux/actions/eventAction";
 
 const AllEvents = () => {
-  const { products, isLoading } = useSelector((state) => state.events);
+  const { events, isLoading } = useSelector((state) => state.events);
   const { seller } = useSelector((state) => state.seller);
 
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ const AllEvents = () => {
   }, [dispatch]);
 
   const handleDelete = (id) => {
-    dispatch(deleteProduct(id));
+    dispatch(deleteEvent(id));
     window.location.reload();
   };
 
@@ -94,8 +94,8 @@ const AllEvents = () => {
 
   const row = [];
 
-  products &&
-    products.forEach((item) => {
+  events &&
+    events.forEach((item) => {
       row.push({
         id: item._id,
         name: item.name,
