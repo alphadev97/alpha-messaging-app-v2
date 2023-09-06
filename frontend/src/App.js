@@ -30,6 +30,7 @@ import {
   ShopCreateEvents,
   ShopAllEvents,
   ShopAllCoupons,
+  ShopPreviewPage,
 } from "./routes/ShopRoutes";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -139,6 +140,7 @@ const App = () => {
             </SellerProtectedRoute>
           }
         />
+        <Route path="/shop/preview/:id" element={<ShopPreviewPage />} />
       </Routes>
       <ToastContainer
         position="bottom-center"
