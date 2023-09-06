@@ -1,32 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteProduct,
-  getAllProductsShop,
-} from "../../redux/actions/productAction";
-import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
-import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
-import Loader from "../Layout/Loader";
 import { DataGrid } from "@mui/x-data-grid";
-import styles from "../../styles/styles";
-import { RxCross1 } from "react-icons/rx";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { AiOutlineDelete } from "react-icons/ai";
+import { RxCross1 } from "react-icons/rx";
+import { useDispatch, useSelector } from "react-redux";
+import styles from "../../styles/styles";
+import Loader from "../Layout/Loader";
 import { server } from "../../server";
 import { toast } from "react-toastify";
 
 const AllCouponCodes = () => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
-  const [value, setValue] = useState(null);
-  const [coupons, setCoupons] = useState([]);
-  const [minAmount, setMinAmount] = useState(null);
-  const [maxAmount, setMaxAmount] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [coupouns, setCoupouns] = useState([]);
+  const [minAmount, setMinAmout] = useState(null);
+  const [maxAmount, setMaxAmount] = useState(null);
   const [selectedProducts, setSelectedProducts] = useState(null);
-
-  //   const { products, isLoading } = useSelector((state) => state.products);
+  const [value, setValue] = useState(null);
   const { seller } = useSelector((state) => state.seller);
+  const { products } = useSelector((state) => state.products);
 
   const dispatch = useDispatch();
 
@@ -38,16 +32,20 @@ const AllCouponCodes = () => {
       })
       .then((res) => {
         setIsLoading(false);
-        console.log(res.data);
-        setCoupons(res.data);
+        setCoupouns(res.data.couponCodes);
       })
       .catch((error) => {
         setIsLoading(false);
+        console.error("Error fetching coupon codes:", error);
       });
   }, [dispatch]);
 
-  const handleDelete = (id) => {
-    dispatch(deleteProduct(id));
+  const handleDelete = async (id) => {
+    axios
+      .delete(`${server}/coupon/delete-coupon/${id}`, { withCredentials: true })
+      .then((res) => {
+        toast.success("Coupon code deleted succesfully!");
+      });
     window.location.reload();
   };
 
@@ -63,32 +61,33 @@ const AllCouponCodes = () => {
           maxAmount,
           selectedProducts,
           value,
-          shop: seller,
+          shop: seller._id,
         },
         { withCredentials: true }
       )
       .then((res) => {
-        toast.success("Coupon Code created successfully!");
+        toast.success("Coupon code created successfully!");
         setOpen(false);
         window.location.reload();
       })
       .catch((error) => {
         toast.error(error.response.data.message);
+        console.log(error);
       });
   };
 
   const columns = [
-    { field: "id", headerName: "Product Id", minWidth: 150, flex: 0.7 },
+    { field: "id", headerName: "Id", minWidth: 150, flex: 0.7 },
     {
       field: "name",
-      headerName: "Name",
+      headerName: "Coupon Code",
       minWidth: 180,
       flex: 1.4,
     },
     {
       field: "price",
-      headerName: "Price",
-      minWidth: 180,
+      headerName: "Value",
+      minWidth: 100,
       flex: 0.6,
     },
     {
@@ -112,12 +111,12 @@ const AllCouponCodes = () => {
 
   const row = [];
 
-  coupons &&
-    coupons.forEach((item) => {
+  coupouns &&
+    coupouns.forEach((item) => {
       row.push({
         id: item._id,
         name: item.name,
-        price: item.value,
+        price: item.value + " %",
         sold: 10,
       });
     });
@@ -139,13 +138,13 @@ const AllCouponCodes = () => {
           <DataGrid
             rows={row}
             columns={columns}
-            pageSizeOptions={10}
-            disableRowSelectionOnClick
+            pageSize={10}
+            disableSelectionOnClick
             autoHeight
           />
           {open && (
-            <div className="fixed top-0 left-0 w-full h-screen bg-[#0000007a] z-[2000] flex items-center justify-center ">
-              <div className="w-[90%] 800px:w-[40%] h-[80vh] bg-white rounded-md shadow p-4 overflow-x-scroll">
+            <div className="fixed top-0 left-0 w-full h-screen bg-[#00000062] z-[20000] flex items-center justify-center">
+              <div className="w-[90%] 800px:w-[40%] h-[80vh] bg-white rounded-md shadow p-4">
                 <div className="w-full flex justify-end">
                   <RxCross1
                     size={30}
@@ -154,9 +153,9 @@ const AllCouponCodes = () => {
                   />
                 </div>
                 <h5 className="text-[30px] font-Poppins text-center">
-                  Create Coupon Code
+                  Create Coupon code
                 </h5>
-                {/* Create coupon code */}
+                {/* create coupoun code */}
                 <form onSubmit={handleSubmit} aria-required={true}>
                   <br />
                   <div>
@@ -166,57 +165,53 @@ const AllCouponCodes = () => {
                     <input
                       type="text"
                       name="name"
-                      value={name}
                       required
-                      className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                      value={name}
+                      className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                       onChange={(e) => setName(e.target.value)}
-                      placeholder="Enter your coupon code name"
+                      placeholder="Enter your coupon code name..."
                     />
                   </div>
-
                   <br />
                   <div>
                     <label className="pb-2">
-                      Discount Percentage{" "}
+                      Discount Percentenge{" "}
                       <span className="text-red-500">*</span>
                     </label>
                     <input
-                      type="number"
+                      type="text"
                       name="value"
                       value={value}
                       required
-                      className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                      className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                       onChange={(e) => setValue(e.target.value)}
-                      placeholder="Enter your coupon code value"
+                      placeholder="Enter your coupon code value..."
                     />
                   </div>
-
                   <br />
                   <div>
-                    <label className="pb-2">Minimum Amount</label>
+                    <label className="pb-2">Min Amount</label>
                     <input
                       type="number"
                       name="value"
                       value={minAmount}
-                      className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
-                      onChange={(e) => setMinAmount(e.target.value)}
-                      placeholder="Enter your coupon min amount"
+                      className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      onChange={(e) => setMinAmout(e.target.value)}
+                      placeholder="Enter your coupon code min amount..."
                     />
                   </div>
-
                   <br />
                   <div>
-                    <label className="pb-2">Maximum Amount</label>
+                    <label className="pb-2">Max Amount</label>
                     <input
                       type="number"
                       name="value"
                       value={maxAmount}
-                      className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                      className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                       onChange={(e) => setMaxAmount(e.target.value)}
-                      placeholder="Enter your coupon max amount"
+                      placeholder="Enter your coupon code max amount..."
                     />
                   </div>
-
                   <br />
                   <div>
                     <label className="pb-2">Selected Product</label>
@@ -236,13 +231,12 @@ const AllCouponCodes = () => {
                         ))}
                     </select>
                   </div>
-
                   <br />
                   <div>
                     <input
                       type="submit"
                       value="Create"
-                      className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                      className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     />
                   </div>
                 </form>
