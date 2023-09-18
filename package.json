@@ -1,28 +1,23 @@
 {
-  "name": "multi-vendor-mern-stack-e-commerce-project-",
-  "version": "1.0.0",
-  "description": "Multi-Vendor MERN Stack E-commerce Project",
-  "main": "backend/server.js",
-  "type": "module",
+  "name": "thread97",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon backend/server.js",
-    "start": "node backend/server.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "author": "Muhammad Usama",
-  "license": "ISC",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "body-parser": "^1.20.2",
-    "colors": "^1.4.0",
-    "cookie-parser": "^1.4.6",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "jsonwebtoken": "^9.0.1",
-    "mongoose": "^7.4.3",
-    "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.9.4",
-    "nodemon": "^3.0.1"
+    "@types/node": "20.6.2",
+    "@types/react": "18.2.22",
+    "@types/react-dom": "18.2.7",
+    "autoprefixer": "10.4.15",
+    "next": "13.4.19",
+    "postcss": "8.4.29",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwindcss": "3.3.3",
+    "typescript": "5.2.2"
   }
 }
