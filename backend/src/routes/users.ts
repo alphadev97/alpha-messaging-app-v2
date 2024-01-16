@@ -4,7 +4,8 @@ import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
-router.post("register", async (req: Request, res: Response) => {
+// /api/users/resgiter
+router.post("/register", async (req: Request, res: Response) => {
   try {
     let user = await User.findOne({
       email: req.body.email,
@@ -29,7 +30,7 @@ router.post("register", async (req: Request, res: Response) => {
       maxAge: 86400000,
     });
 
-    return res.sendStatus(200);
+    return res.status(200).send({ message: "User registered OK" });
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Something went wrong!" });
