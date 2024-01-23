@@ -14,7 +14,7 @@ export const signup = async (req, res, next) => {
       if (err) throw err;
 
       res.cookie("token", token).status(201).json({
-        _id: newUser._id,
+        id: newUser._id,
         message: "User is created successfully!",
       });
     }
