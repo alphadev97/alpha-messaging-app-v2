@@ -13,7 +13,10 @@ export const signup = async (req, res, next) => {
     (err, token) => {
       if (err) throw err;
 
-      res.cookie("token", token).status(201).json("ok");
+      res.cookie("token", token).status(201).json({
+        _id: newUser._id,
+        message: "User is created successfully!",
+      });
     }
   );
 
