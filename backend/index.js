@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import authRouter from "./routes/authRoute.js";
 
 dotenv.config();
 
@@ -16,9 +17,13 @@ mongoose
     console.log(error);
   });
 
+app.use(express.json());
+
 app.get("/test", (req, res) => {
   res.json("test ok");
 });
+
+app.use("/api/user", authRouter);
 
 app.listen(port, () => {
   console.log(`Backend is running on port ${port}`);
