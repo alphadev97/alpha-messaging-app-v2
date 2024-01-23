@@ -1,5 +1,7 @@
+import Resgiter from "./auth/Register";
+
 function App() {
-  return <div className="bg-red-500">TEST</div>;
+  return <Resgiter />;
 }
 
 export default App;
