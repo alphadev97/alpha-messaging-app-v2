@@ -9,6 +9,7 @@ export const signup = async (req, res, next) => {
   jwt.sign(
     { userId: newUser._id },
     process.env.JWT_SECRET_KEY,
+    {},
     (err, token) => {
       if (err) throw err;
 
