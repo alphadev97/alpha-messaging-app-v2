@@ -15,6 +15,7 @@ export const signup = async (req, res, next) => {
 
       res.cookie("token", token).status(201).json({
         id: newUser._id,
+        username,
         message: "User is created successfully!",
       });
     }
@@ -23,6 +24,19 @@ export const signup = async (req, res, next) => {
   try {
     await newUser.save();
     res.status(201).json({ message: "User is created successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const profile = (req, res, next) => {
+  const { token } = req.cookies;
+  try {
+    jwt.verify(token, process.env.JWT_SECRET_KEY, {}, (err, userData) => {
+      if (err) throw err;
+
+      res.json(userData);
+    });
   } catch (error) {
     next(error);
   }
