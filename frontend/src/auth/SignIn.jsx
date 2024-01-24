@@ -1,10 +1,12 @@
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
 
 const SignIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const { setUsername: setLoggedInUsername, setId } = useContext(UserContext);
 
@@ -17,6 +19,7 @@ const SignIn = () => {
 
     setLoggedInUsername(username);
     setId(data.id);
+    navigate("/");
   };
 
   return (
