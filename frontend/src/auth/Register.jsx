@@ -39,6 +39,9 @@ const Register = () => {
         <button className="p-2 bg-blue-500 text-white w-full rounded-sm">
           Register
         </button>
+        <div className="text-center m-2">
+          Already a member? <a href="">Login here</a>
+        </div>
       </form>
     </div>
   );

@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import authRouter from "./routes/authRoute.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 
@@ -18,12 +19,6 @@ mongoose
     console.log(error);
   });
 
-app.use((req, res, next) => {
-  console.log("Request Origin:", req.get("Origin"));
-  console.log("Allowed Origin:", process.env.CLIENT_URL);
-  next();
-});
-
 app.use(
   cors({
     credentials: true,
@@ -32,6 +27,7 @@ app.use(
 );
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.get("/test", (req, res) => {
   res.json("test ok");

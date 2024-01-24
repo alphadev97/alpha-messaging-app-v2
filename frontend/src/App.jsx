@@ -9,7 +9,9 @@ function App() {
 
   const { username } = useContext(UserContext);
 
-  console.log(username);
+  if (username) {
+    return "Logged In " + username;
+  }
 
   return <Register />;
 }
