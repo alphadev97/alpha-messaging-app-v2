@@ -1,12 +1,27 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../context/UserContext";
+import axios from "axios";
 
 const SignIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const { setUsername: setLoggedInUsername, setId } = useContext(UserContext);
+
+  const signIn = async (e) => {
+    e.preventDefault();
+    const { data } = await axios.post("/api/user/signin", {
+      username,
+      password,
+    });
+
+    setLoggedInUsername(username);
+    setId(data.id);
+  };
+
   return (
     <div className="bg-blue-50 h-screen flex items-center">
-      <form className="w-64 mx-auto">
+      <form className="w-64 mx-auto" onSubmit={signIn}>
         <input
           type="text"
           placeholder="username"
