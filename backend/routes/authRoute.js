@@ -1,5 +1,5 @@
 import express from "express";
-import { profile, signup } from "../controllers/authController.js";
+import { profile, signin, signup } from "../controllers/authController.js";
 
 const router = express.Router();
 
@@ -7,5 +7,7 @@ const router = express.Router();
 router.post("/signup", signup);
 // http://localhost:5000/api/user/profile
 router.get("/profile", profile);
+// http://localhost:5000/api/user/signin
+router.post("/signin", signin);
 
 export default router;
