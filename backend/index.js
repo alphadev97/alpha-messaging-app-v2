@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import authRouter from "./routes/authRoute.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import WebSocket, { WebSocketServer } from "ws";
 
 dotenv.config();
 
@@ -36,6 +37,12 @@ app.get("/test", (req, res) => {
 // http://localhost:5000/api/user/signup
 app.use("/api/user", authRouter);
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Backend is running on port ${port}`);
+});
+
+// Websocket
+const wss = new WebSocketServer({ server });
+wss.on("connection", (connection) => {
+  console.log("connected wss");
 });
