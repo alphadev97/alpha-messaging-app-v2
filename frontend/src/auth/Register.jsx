@@ -1,10 +1,12 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import React, { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
 
 const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const { setUsername: setLoggedInUsername, setId } = useContext(UserContext);
 
@@ -17,6 +19,10 @@ const Register = () => {
 
     setLoggedInUsername(username);
     setId(data.id);
+
+    localStorage.setItem("token", data.token);
+
+    navigate("/");
   };
 
   return (
