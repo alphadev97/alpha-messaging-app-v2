@@ -5,6 +5,7 @@ import authRouter from "./routes/authRoute.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import WebSocket, { WebSocketServer } from "ws";
+import jwt from "jsonwebtoken";
 
 dotenv.config();
 
@@ -43,6 +44,37 @@ const server = app.listen(port, () => {
 
 // Websocket
 const wss = new WebSocketServer({ server });
-wss.on("connection", (connection) => {
-  console.log("connected wss");
+wss.on("connection", (connection, req) => {
+  const cookies = req.headers.cookie;
+
+  if (cookies) {
+    const tokenCookieString = cookies
+      .split(";")
+      .find((str) => str.startsWith("token="));
+
+    if (tokenCookieString) {
+      const token = tokenCookieString.split("=")[1];
+
+      if (token) {
+        jwt.verify(token, process.env.JWT_SECRET_KEY, {}, (err, userData) => {
+          if (err) throw err;
+          const { userId, username } = userData;
+
+          connection.userId = userId;
+          connection.username = username;
+        });
+      }
+    }
+  }
+
+  [...wss.clients].forEach((client) => {
+    client.send(
+      JSON.stringify({
+        online: [...wss.clients].map((c) => ({
+          userId: c.userId,
+          username: c.username,
+        })),
+      })
+    );
+  });
 });
