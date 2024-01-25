@@ -12,13 +12,20 @@ const SignIn = () => {
 
   const signIn = async (e) => {
     e.preventDefault();
-    const { data } = await axios.post("/api/user/signin", {
-      username,
-      password,
-    });
+    const { data } = await axios.post(
+      "/api/user/signin",
+      {
+        username,
+        password,
+      },
+      { withCredentials: true }
+    );
 
     setLoggedInUsername(username);
     setId(data.id);
+
+    localStorage.setItem("token", data.token);
+
     navigate("/");
   };
 

@@ -6,12 +6,18 @@ export const UserContext = createContext({});
 export const UserContextProvider = ({ children }) => {
   const [username, setUsername] = useState(null);
   const [id, setId] = useState(null);
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
-    axios.get("/api/user/profile").then((response) => {
-      setId(response.data.userId);
-      setUsername(response.data.username);
-    });
+    const storedToken = localStorage.getItem("token");
+
+    if (storedToken) {
+      setToken(storedToken);
+      axios.get("/api/user/profile").then((response) => {
+        setId(response.data.userId);
+        setUsername(response.data.username);
+      });
+    }
   }, []);
 
   return (

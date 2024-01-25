@@ -58,7 +58,7 @@ export const signin = async (req, res, next) => {
         if (err) throw err;
 
         res
-          .cookie("token", token, { sameSite: "none", secure: true })
+          .cookie("token", token, { sameSite: "None", secure: true })
           .status(201)
           .json({
             id: validUser._id,

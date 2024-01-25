@@ -4,8 +4,9 @@ import { UserContext } from "../context/UserContext";
 
 const PrivateRoute = () => {
   const { username } = useContext(UserContext);
+  const token = localStorage.getItem("token");
 
-  return username ? <Outlet /> : <Navigate to={"sign-in"} />;
+  return token ? <Outlet /> : <Navigate to={"sign-in"} />;
 };
 
 export default PrivateRoute;
