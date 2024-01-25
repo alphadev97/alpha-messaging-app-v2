@@ -45,6 +45,7 @@ const server = app.listen(port, () => {
 // Websocket
 const wss = new WebSocketServer({ server });
 wss.on("connection", (connection, req) => {
+  // fecth username and id from cookies
   const cookies = req.headers.cookie;
 
   if (cookies) {
@@ -67,6 +68,12 @@ wss.on("connection", (connection, req) => {
     }
   }
 
+  connection.on("message", (message) => {
+    message = JSON.parse(message.toString());
+    console.log(message);
+  });
+
+  // Show online users
   [...wss.clients].forEach((client) => {
     client.send(
       JSON.stringify({
