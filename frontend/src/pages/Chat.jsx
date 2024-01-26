@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Avatar from "../components/Avatar";
 import Logo from "../components/Logo";
 import { UserContext } from "../context/UserContext";
+import { uniqBy } from "lodash";
 
 const Chat = () => {
   const [ws, setWs] = useState(null);
@@ -10,6 +11,7 @@ const Chat = () => {
   const [newMessageText, setNewMessageText] = useState("");
   const [messages, setMessages] = useState([]);
   const { username, id } = useContext(UserContext);
+  const divUnderMeassages = useRef();
 
   useEffect(() => {
     const ws = new WebSocket("ws://localhost:5000");
@@ -30,20 +32,24 @@ const Chat = () => {
 
   const handleMessage = (ev) => {
     const messageData = JSON.parse(ev.data);
-    console.log(ev, messageData);
+    console.log({ ev, messageData });
 
     if ("online" in messageData) {
       showOnlinePeople(messageData.online);
-    } else {
+    } else if ("text" in messageData) {
       setMessages((prev) => [
         ...prev,
-        { isOur: false, text: messageData.text },
+        {
+          ...messageData,
+        },
       ]);
     }
   };
 
   const onlinePeopleExclSelf = { ...onlinePeople };
   delete onlinePeopleExclSelf[id];
+
+  const messagesWithoutDupes = uniqBy(messages, "_id");
 
   const sendMessage = (ev) => {
     ev.preventDefault();
@@ -56,8 +62,24 @@ const Chat = () => {
     );
 
     setNewMessageText("");
-    setMessages((prev) => [...prev, { text: newMessageText, isOur: true }]);
+    setMessages((prev) => [
+      ...prev,
+      {
+        text: newMessageText,
+        sender: id,
+        recipient: selectedUserId,
+        _id: Date.now(),
+      },
+    ]);
   };
+
+  useEffect(() => {
+    const div = divUnderMeassages.current;
+
+    if (div) {
+      div.scrollIntoView({ behavior: "smooth", block: "end" });
+    }
+  }, [messages]);
 
   return (
     <div className="flex h-screen">
@@ -106,10 +128,30 @@ const Chat = () => {
           )}
 
           {!!selectedUserId && (
-            <div>
-              {messages.map((message) => (
-                <div>{message.text}</div>
-              ))}
+            <div className="relative h-full">
+              <div className="overflow-y-scroll absolute top-0 left-0 right-0 bottom-2">
+                {messagesWithoutDupes.map((message) => (
+                  <div
+                    className={`${
+                      message.sender === id ? "text-right" : "text-left"
+                    }`}
+                  >
+                    <div
+                      className={`text-left inline-block p-2 my-2 rounded-lg text-sm shadow-md ${
+                        message.sender === id
+                          ? "bg-blue-500 text-white"
+                          : "bg-white text-gray-500"
+                      }`}
+                    >
+                      messageId: {message._id} <br />
+                      sender: {message.sender} <br />
+                      my id: {id} <br />
+                      {message.text}
+                    </div>
+                  </div>
+                ))}
+                <div ref={divUnderMeassages}></div>
+              </div>
             </div>
           )}
         </div>
