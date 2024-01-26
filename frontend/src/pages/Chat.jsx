@@ -8,6 +8,7 @@ const Chat = () => {
   const [onlinePeople, setOnlinePeople] = useState({});
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [newMessageText, setNewMessageText] = useState("");
+  const [messages, setMessages] = useState([]);
   const { username, id } = useContext(UserContext);
 
   useEffect(() => {
@@ -29,9 +30,15 @@ const Chat = () => {
 
   const handleMessage = (ev) => {
     const messageData = JSON.parse(ev.data);
+    console.log(ev, messageData);
 
     if ("online" in messageData) {
       showOnlinePeople(messageData.online);
+    } else {
+      setMessages((prev) => [
+        ...prev,
+        { isOur: false, text: messageData.text },
+      ]);
     }
   };
 
@@ -43,12 +50,13 @@ const Chat = () => {
 
     ws.send(
       JSON.stringify({
-        message: {
-          recipient: selectedUserId,
-          text: newMessageText,
-        },
+        recipient: selectedUserId,
+        text: newMessageText,
       })
     );
+
+    setNewMessageText("");
+    setMessages((prev) => [...prev, { text: newMessageText, isOur: true }]);
   };
 
   return (
@@ -94,6 +102,14 @@ const Chat = () => {
                 </svg>
                 Select a person to chat
               </div>
+            </div>
+          )}
+
+          {!!selectedUserId && (
+            <div>
+              {messages.map((message) => (
+                <div>{message.text}</div>
+              ))}
             </div>
           )}
         </div>

@@ -69,8 +69,15 @@ wss.on("connection", (connection, req) => {
   }
 
   connection.on("message", (message) => {
-    message = JSON.parse(message.toString());
-    console.log(message);
+    const messageData = JSON.parse(message.toString());
+    const { recipient, text } = messageData;
+    if (recipient && text) {
+      [...wss.clients]
+        .filter((c) => c.userId === recipient)
+        .forEach((c) =>
+          c.send(JSON.stringify({ text, sender: connection.userId }))
+        );
+    }
   });
 
   // Show online users
