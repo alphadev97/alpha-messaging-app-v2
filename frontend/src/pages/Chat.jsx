@@ -94,7 +94,9 @@ const Chat = () => {
 
   useEffect(() => {
     if (selectedUserId) {
-      axios.get(`/messages/${selectedUserId}`);
+      axios.get(`/messages/${selectedUserId}`).then((res) => {
+        setMessages(res.data);
+      });
     }
   }, [selectedUserId]);
 
@@ -149,6 +151,7 @@ const Chat = () => {
               <div className="overflow-y-scroll absolute top-0 left-0 right-0 bottom-2">
                 {messagesWithoutDupes.map((message) => (
                   <div
+                    key={message._id}
                     className={`${
                       message.sender === id ? "text-right" : "text-left"
                     }`}
@@ -160,9 +163,6 @@ const Chat = () => {
                           : "bg-white text-gray-500"
                       }`}
                     >
-                      messageId: {message._id} <br />
-                      sender: {message.sender} <br />
-                      my id: {id} <br />
                       {message.text}
                     </div>
                   </div>
