@@ -5,6 +5,7 @@ import { UserContext } from "../context/UserContext";
 import { uniqBy } from "lodash";
 import axios from "axios";
 import People from "../components/People";
+import Logout from "../lib/Logout";
 
 const Chat = () => {
   const [ws, setWs] = useState(null);
@@ -117,29 +118,33 @@ const Chat = () => {
 
   return (
     <div className="flex h-screen">
-      <div className="bg-white w-1/3">
-        <Logo />
-        {Object.keys(onlinePeopleExclSelf).map((userId) => (
-          <People
-            key={userId}
-            id={userId}
-            online={true}
-            username={onlinePeopleExclSelf[userId]}
-            onClick={() => setSelectedUserId(userId)}
-            selected={userId === selectedUserId}
-          />
-        ))}
+      <div className="bg-white w-1/3 flex flex-col">
+        <div className="flex-grow">
+          <Logo />
+          {Object.keys(onlinePeopleExclSelf).map((userId) => (
+            <People
+              key={userId}
+              id={userId}
+              online={true}
+              username={onlinePeopleExclSelf[userId]}
+              onClick={() => setSelectedUserId(userId)}
+              selected={userId === selectedUserId}
+            />
+          ))}
 
-        {Object.keys(offlinePeople).map((userId) => (
-          <People
-            key={userId}
-            id={userId}
-            online={false}
-            username={offlinePeople[userId].username}
-            onClick={() => setSelectedUserId(userId)}
-            selected={userId === selectedUserId}
-          />
-        ))}
+          {Object.keys(offlinePeople).map((userId) => (
+            <People
+              key={userId}
+              id={userId}
+              online={false}
+              username={offlinePeople[userId].username}
+              onClick={() => setSelectedUserId(userId)}
+              selected={userId === selectedUserId}
+            />
+          ))}
+        </div>
+
+        <Logout />
       </div>
       <div className="flex flex-col bg-blue-100 w-2/3 p-2">
         <div className="flex-grow">

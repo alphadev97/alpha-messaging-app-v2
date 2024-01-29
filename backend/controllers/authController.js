@@ -88,3 +88,11 @@ export const profile = (req, res, next) => {
     res.status(401).json("no token");
   }
 };
+
+export const logout = (req, res, next) => {
+  try {
+    res.cookie("token", "", { sameSite: "None", secure: true }).json("ok");
+  } catch (error) {
+    next(error);
+  }
+};
