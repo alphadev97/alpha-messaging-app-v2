@@ -82,6 +82,37 @@ const server = app.listen(port, () => {
 // Websocket
 const wss = new WebSocketServer({ server });
 wss.on("connection", (connection, req) => {
+  const notifyAboutOnlinePeople = () => {
+    // Show online users
+    [...wss.clients].forEach((client) => {
+      client.send(
+        JSON.stringify({
+          online: [...wss.clients].map((c) => ({
+            userId: c.userId,
+            username: c.username,
+          })),
+        })
+      );
+    });
+  };
+
+  connection.isLive = true;
+
+  setInterval(() => {
+    connection.ping();
+
+    connection.deathTimer = setTimeout(() => {
+      connection.isLive = false;
+      connection.terminate();
+      notifyAboutOnlinePeople();
+      console.log("dead");
+    }, 1000);
+  }, 5000);
+
+  connection.on("pong", () => {
+    clearTimeout(connection.deathTimer);
+  });
+
   // fecth username and id from cookies
   const cookies = req.headers.cookie;
 
@@ -130,15 +161,5 @@ wss.on("connection", (connection, req) => {
     }
   });
 
-  // Show online users
-  [...wss.clients].forEach((client) => {
-    client.send(
-      JSON.stringify({
-        online: [...wss.clients].map((c) => ({
-          userId: c.userId,
-          username: c.username,
-        })),
-      })
-    );
-  });
+  notifyAboutOnlinePeople();
 });
