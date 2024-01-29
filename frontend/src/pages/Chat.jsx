@@ -121,6 +121,7 @@ const Chat = () => {
         <Logo />
         {Object.keys(onlinePeopleExclSelf).map((userId) => (
           <People
+            key={userId}
             id={userId}
             online={true}
             username={onlinePeopleExclSelf[userId]}
@@ -131,6 +132,7 @@ const Chat = () => {
 
         {Object.keys(offlinePeople).map((userId) => (
           <People
+            key={userId}
             id={userId}
             online={false}
             username={offlinePeople[userId].username}
