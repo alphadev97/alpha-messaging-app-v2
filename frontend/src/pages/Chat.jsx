@@ -3,6 +3,7 @@ import Avatar from "../components/Avatar";
 import Logo from "../components/Logo";
 import { UserContext } from "../context/UserContext";
 import { uniqBy } from "lodash";
+import axios from "axios";
 
 const Chat = () => {
   const [ws, setWs] = useState(null);
@@ -14,11 +15,21 @@ const Chat = () => {
   const divUnderMeassages = useRef();
 
   useEffect(() => {
+    connectToWs();
+  }, []);
+
+  const connectToWs = () => {
     const ws = new WebSocket("ws://localhost:5000");
     setWs(ws);
 
     ws.addEventListener("message", handleMessage);
-  }, []);
+    ws.addEventListener("close", () => {
+      setTimeout(() => {
+        console.log("Diconnected, try to reconnect");
+        connectToWs;
+      }, 1000);
+    });
+  };
 
   const showOnlinePeople = (peopleArray) => {
     const people = {};
@@ -80,6 +91,12 @@ const Chat = () => {
       div.scrollIntoView({ behavior: "smooth", block: "end" });
     }
   }, [messages]);
+
+  useEffect(() => {
+    if (selectedUserId) {
+      axios.get(`/messages/${selectedUserId}`);
+    }
+  }, [selectedUserId]);
 
   return (
     <div className="flex h-screen">
