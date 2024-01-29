@@ -144,7 +144,7 @@ const Chat = () => {
           ))}
         </div>
 
-        <Logout />
+        <Logout setWs={setWs} />
       </div>
       <div className="flex flex-col bg-blue-100 w-2/3 p-2">
         <div className="flex-grow">

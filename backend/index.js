@@ -96,13 +96,13 @@ wss.on("connection", (connection, req) => {
     });
   };
 
-  connection.isLive = true;
+  connection.isAlive = true;
 
-  setInterval(() => {
+  connection.timer = setInterval(() => {
     connection.ping();
-
     connection.deathTimer = setTimeout(() => {
-      connection.isLive = false;
+      connection.isAlive = false;
+      clearInterval(connection.timer);
       connection.terminate();
       notifyAboutOnlinePeople();
       console.log("dead");

@@ -3,12 +3,13 @@ import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
-const Logout = () => {
+const Logout = ({ setWs }) => {
   const { username, setId, setUsername } = useContext(UserContext);
   const navigate = useNavigate();
 
   const logout = () => {
     axios.post("/api/user/logout").then(() => {
+      setWs(null);
       setId(null);
       setUsername(null);
       navigate("/sign-in");
