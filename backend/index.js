@@ -8,6 +8,9 @@ import WebSocket, { WebSocketServer } from "ws";
 import jwt from "jsonwebtoken";
 import Message from "./models/Message.js";
 import { UserModel } from "./models/User.js";
+import fs from "fs";
+import url from "url";
+import path from "path";
 
 dotenv.config();
 
@@ -138,7 +141,29 @@ wss.on("connection", (connection, req) => {
 
   connection.on("message", async (message) => {
     const messageData = JSON.parse(message.toString());
-    const { recipient, text } = messageData;
+    const { recipient, text, file } = messageData;
+
+    if (file) {
+      const parts = file.name.split(".");
+      const ext = parts[parts.length - 1];
+      const fileName = Date.now() + "." + ext;
+
+      // Get the current module's URL
+      const currentModuleUrl = new URL(import.meta.url);
+      // Extract the directory path
+      const currentModuleDir = path.dirname(currentModuleUrl.pathname);
+      // Construct the full path to the uploads directory
+      const uploadsDir = path.join(currentModuleDir, "uploads");
+      // Construct the full path to the file
+      const filePath = path.join(uploadsDir, fileName);
+
+      const bufferData = new Buffer(file.data, "base64");
+
+      fs.writeFile(filePath, bufferData, () => {
+        console.log("file saved:" + filePath);
+      });
+    }
+
     if (recipient && text) {
       const messageDoc = await Message.create({
         sender: connection.userId,

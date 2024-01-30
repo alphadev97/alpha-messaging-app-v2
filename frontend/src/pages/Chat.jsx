@@ -65,13 +65,14 @@ const Chat = () => {
 
   const messagesWithoutDupes = uniqBy(messages, "_id");
 
-  const sendMessage = (ev) => {
-    ev.preventDefault();
+  const sendMessage = (ev, file = null) => {
+    if (ev) ev.preventDefault();
 
     ws.send(
       JSON.stringify({
         recipient: selectedUserId,
         text: newMessageText,
+        file,
       })
     );
 
@@ -85,6 +86,19 @@ const Chat = () => {
         _id: Date.now(),
       },
     ]);
+  };
+
+  // Send File
+
+  const sendFile = (ev) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(ev.target.files[0]);
+    reader.onload = () => {
+      sendMessage(null, {
+        name: ev.target.files[0].name,
+        data: reader.result,
+      });
+    };
   };
 
   useEffect(() => {
@@ -206,6 +220,23 @@ const Chat = () => {
               placeholder="Type your message here"
               className="bg-white flex-grow border p-2 rounded-sm"
             />
+            <label className="bg-blue-200 p-2 cursor-pointer text-gray-600 rounded-sm border border-blue-300">
+              <input type="file" className="hidden" onChange={sendFile} />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13"
+                />
+              </svg>
+            </label>
             <button
               type="submit"
               className="bg-blue-500 p-2 text-white rounded-sm"
