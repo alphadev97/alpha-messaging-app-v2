@@ -29,7 +29,7 @@ const Chat = () => {
     ws.addEventListener("close", () => {
       setTimeout(() => {
         console.log("Diconnected, try to reconnect");
-        connectToWs;
+        connectToWs();
       }, 1000);
     });
   };

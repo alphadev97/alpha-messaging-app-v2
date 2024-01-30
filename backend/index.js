@@ -33,6 +33,17 @@ app.use(
   })
 );
 
+// image
+
+// Get the current module's URL
+const currentModuleUrl = new URL(import.meta.url);
+// Extract the directory path
+const currentModuleDir = path.dirname(currentModuleUrl.pathname);
+// Construct the full path to the uploads directory
+const uploadsDir = path.join(currentModuleDir, "uploads");
+
+app.use("/uploads", express.static(currentModuleDir + "/uploads"));
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -157,7 +168,11 @@ wss.on("connection", (connection, req) => {
       // Construct the full path to the file
       const filePath = path.join(uploadsDir, fileName);
 
-      const bufferData = new Buffer(file.data, "base64");
+      const bufferData = Buffer.from(file.data.split(",")[1], "base64");
+
+      // console.log(file);
+      console.log("File Data");
+      console.log(file.data);
 
       fs.writeFile(filePath, bufferData, () => {
         console.log("file saved:" + filePath);
