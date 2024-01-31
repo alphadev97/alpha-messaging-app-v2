@@ -153,11 +153,12 @@ wss.on("connection", (connection, req) => {
   connection.on("message", async (message) => {
     const messageData = JSON.parse(message.toString());
     const { recipient, text, file } = messageData;
+    let fileName = null;
 
     if (file) {
       const parts = file.name.split(".");
       const ext = parts[parts.length - 1];
-      const fileName = Date.now() + "." + ext;
+      fileName = Date.now() + "." + ext;
 
       // Get the current module's URL
       const currentModuleUrl = new URL(import.meta.url);
@@ -170,20 +171,17 @@ wss.on("connection", (connection, req) => {
 
       const bufferData = Buffer.from(file.data.split(",")[1], "base64");
 
-      // console.log(file);
-      console.log("File Data");
-      console.log(file.data);
-
       fs.writeFile(filePath, bufferData, () => {
         console.log("file saved:" + filePath);
       });
     }
 
-    if (recipient && text) {
+    if (recipient && (text || file)) {
       const messageDoc = await Message.create({
         sender: connection.userId,
         recipient,
         text,
+        file: file ? fileName : null,
       });
 
       [...wss.clients]
@@ -194,6 +192,7 @@ wss.on("connection", (connection, req) => {
               text,
               sender: connection.userId,
               recipient,
+              file: file ? fileName : null,
               _id: messageDoc._id,
             })
           )
