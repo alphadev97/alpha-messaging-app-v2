@@ -51,12 +51,14 @@ const Chat = () => {
     if ("online" in messageData) {
       showOnlinePeople(messageData.online);
     } else if ("text" in messageData) {
-      setMessages((prev) => [
-        ...prev,
-        {
-          ...messageData,
-        },
-      ]);
+      if (messageData.sender === selectedUserId) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            ...messageData,
+          },
+        ]);
+      }
     }
   };
 
