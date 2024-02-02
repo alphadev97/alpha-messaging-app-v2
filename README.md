@@ -2,6 +2,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+![App Mockup](./frontend/public/webmockup.png)
+
 ## Description
 
 Alpha Messaging App is a simple full-stack messaging application built with Express.js, MongoDB, and React. It provides users with the ability to sign up, communicate with each other in real-time, and share images.
