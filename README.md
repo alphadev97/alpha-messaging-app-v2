@@ -120,7 +120,7 @@ Feel free to contribute to the project. If you have ideas for improvements or fi
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](https://github.com/alphadev97/alpha-messaging-app/blob/main/LICENSE).
 
 ## Note
 
