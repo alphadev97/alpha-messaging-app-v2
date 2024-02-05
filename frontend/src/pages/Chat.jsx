@@ -139,7 +139,7 @@ const Chat = () => {
 
   return (
     <div className="flex h-screen">
-      <div className="bg-white w-1/3 flex flex-col">
+      <div className="bg-white w-1/4 flex flex-col">
         <div className="flex-grow">
           <Logo />
           {Object.keys(onlinePeopleExclSelf).map((userId) => (
@@ -167,7 +167,7 @@ const Chat = () => {
 
         <Logout setWs={setWs} />
       </div>
-      <div className="flex flex-col bg-blue-100 w-2/3 p-2">
+      <div className="flex flex-col bg-blue-100 w-3/4">
         <div className="flex-grow">
           {!selectedUserId && (
             <div className="h-full flex items-center justify-center font-bold">
@@ -193,7 +193,12 @@ const Chat = () => {
 
           {!!selectedUserId && (
             <div className="relative h-full">
-              <div className="overflow-y-scroll absolute top-0 left-0 right-0 bottom-2">
+              <div className="fixed z-50 bg-white w-full px-2 py-4 shadow-sm">
+                <h2 className="text-2xl font-semibold">
+                  {offlinePeople[selectedUserId].username}
+                </h2>
+              </div>
+              <div className="overflow-y-scroll absolute top-0 left-0 right-0 bottom-2 p-2">
                 {messagesWithoutDupes.map((message) => (
                   <div
                     key={message._id}

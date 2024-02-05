@@ -1,7 +1,6 @@
 import Avatar from "./Avatar";
 
-const People = ({ id, username, onClick, selected, online, messages }) => {
-  console.log(messages);
+const People = ({ id, username, onClick, selected, online }) => {
   return (
     <div
       key={id}
