@@ -1,10 +1,15 @@
 // Import necessary modules
 import React, { useEffect, useState, useRef } from "react";
 import io from "socket.io-client";
+import useFetcher from "../store/hooks/useFetcher";
 
 const ChatComponent = () => {
   // Use useRef to persist the socket instance
   const socketRef = useRef();
+  const { selectedUser, setSelectedUser } = useFetcher();
+  console.log(selectedUser);
+  setSelectedUser("Usama");
+  console.log(selectedUser);
 
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
