@@ -1,8 +1,9 @@
-import express from "express";
-import { createServer } from "node:http";
-import cors from "cors";
-import { Server } from "socket.io";
 import dotenv from "dotenv";
+import cors from "cors";
+import express from "express";
+import mongoose from "mongoose";
+import { createServer } from "node:http";
+import { Server } from "socket.io";
 
 dotenv.config();
 const app = express();
