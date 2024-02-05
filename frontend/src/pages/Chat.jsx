@@ -167,7 +167,7 @@ const Chat = () => {
 
         <Logout setWs={setWs} />
       </div>
-      <div className="flex flex-col bg-blue-100 w-3/4">
+      <div className="flex flex-col bg-gray-100 w-3/4">
         <div className="flex-grow">
           {!selectedUserId && (
             <div className="h-full flex items-center justify-center font-bold">
