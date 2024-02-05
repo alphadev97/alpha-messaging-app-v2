@@ -3,7 +3,7 @@ import ChatComponent from "./components/Chat";
 function App() {
   return (
     <div>
-      <h1 className="text-red-500">
+      <h1 className="">
         <ChatComponent />
       </h1>
     </div>

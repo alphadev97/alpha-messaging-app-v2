@@ -1,40 +1,45 @@
 // Import necessary modules
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import io from "socket.io-client";
 
 const ChatComponent = () => {
-  // Connect to the Socket.IO server
-  const socket = io("http://localhost:5500");
+  // Use useRef to persist the socket instance
+  const socketRef = useRef();
 
-  // State to store chat messages
   const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
 
   useEffect(() => {
-    // Listen for events from the server
-    socket.on("connect", () => {
+    // Initialize socket only once
+    socketRef.current = io("http://localhost:5500");
+
+    socketRef.current.on("connect", () => {
       console.log("Connected to server");
     });
 
-    socket.on("disconnect", () => {
+    socketRef.current.on("disconnect", () => {
       console.log("Disconnected from server");
     });
 
-    // Listen for chat messages from the server
-    socket.on("chatMessage", (message) => {
+    socketRef.current.on("message", (message) => {
+      console.log(message);
       setMessages((prevMessages) => [...prevMessages, message]);
     });
 
-    // Additional event listeners can be added here based on your application's requirements
-
     return () => {
-      // Disconnect from the server when the component unmounts
-      socket.disconnect();
+      socketRef.current.disconnect();
     };
-  }, [socket]); // Make sure to include the socket in the dependency array
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(newMessage);
+    socketRef.current.emit("message", newMessage);
+  };
 
   return (
     <div>
-      {/* Render chat messages */}
+      {messages}
       <ul>
         {messages.map((message) => (
           <li key={message.id}>
@@ -43,7 +48,14 @@ const ChatComponent = () => {
         ))}
       </ul>
 
-      {/* Your chat input form goes here */}
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Enter Message"
+          onChange={(e) => setNewMessage(e.target.value)}
+        />
+        <button type="submit">Send</button>
+      </form>
     </div>
   );
 };

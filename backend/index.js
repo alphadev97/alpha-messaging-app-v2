@@ -12,8 +12,6 @@ app.use(cors());
 const server = createServer(app);
 const io = new Server(server, { cors: { origin: "*" } });
 
-console.log(process.env.CLIENT_URL);
-
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -21,7 +19,9 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("a user connected");
+  socket.on("message", (message) => {
+    io.emit("message", message);
+  });
 
   socket.on("disconnect", () => {
     console.log("User disconnected");
