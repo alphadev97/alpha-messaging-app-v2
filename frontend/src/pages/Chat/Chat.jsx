@@ -6,10 +6,10 @@ import useFetcher from "../../redux/hooks/useFetcher";
 const Chat = () => {
   // Use useRef to persist the socket instance
   const socketRef = useRef();
-  const { selectedUser, setSelectedUser } = useFetcher();
-  console.log(selectedUser);
-  setSelectedUser("Usama");
-  console.log(selectedUser);
+  // const { selectedUser, setSelectedUser } = useFetcher();
+  // console.log(selectedUser);
+  // setSelectedUser("Usama");
+  // console.log(selectedUser);
 
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
