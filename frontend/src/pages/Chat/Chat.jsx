@@ -1,9 +1,9 @@
 // Import necessary modules
 import React, { useEffect, useState, useRef } from "react";
 import io from "socket.io-client";
-import useFetcher from "../store/hooks/useFetcher";
+import useFetcher from "../../redux/hooks/useFetcher";
 
-const ChatComponent = () => {
+const Chat = () => {
   // Use useRef to persist the socket instance
   const socketRef = useRef();
   const { selectedUser, setSelectedUser } = useFetcher();
@@ -65,4 +65,4 @@ const ChatComponent = () => {
   );
 };
 
-export default ChatComponent;
+export default Chat;
