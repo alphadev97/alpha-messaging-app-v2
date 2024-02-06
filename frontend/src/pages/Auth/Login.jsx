@@ -1,7 +1,10 @@
+import Logo from "../../components/Logo";
+
 const Login = () => {
   return (
     <div className="flex flex-col h-[100vh] w-full items-center">
       <div className="flex flex-col w-full h-full items-center justify-center gap-4">
+        <Logo />
         <input
           className="border border-gray-500 p-3 w-[400px] rounded-md"
           type="text"
