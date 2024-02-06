@@ -1,16 +1,15 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home/Home";
-import Chat from "./pages/Chat/Chat";
-import PrivateRoute from "./lib/PrivateRoute";
-import useFetcher from "./redux/hooks/useFetcher";
-import { useEffect } from "react";
 import Login from "./pages/Auth/Login";
+import Signup from "./pages/Auth/Signup";
+import Home from "./pages/Home/Home";
+import PrivateRoute from "./lib/PrivateRoute";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<Home />} />
         </Route>

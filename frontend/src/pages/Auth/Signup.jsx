@@ -3,10 +3,18 @@ import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-const Login = () => {
+const Signup = () => {
   const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => console.log(data);
+
+  const navigate = useNavigate();
+  const onSubmit = (data) => {
+    console.log(data);
+    navigate("/login");
+    toast.success("user is created");
+  };
 
   return (
     <div className="flex flex-col h-[100vh] w-full items-center">
@@ -14,6 +22,14 @@ const Login = () => {
         <Logo />
 
         <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+          <TextField
+            id="username"
+            label="Enter Your Username"
+            variant="outlined"
+            className="w-[400px]"
+            {...register("username")}
+          />
+
           <TextField
             id="email"
             label="Enter Your Email"
@@ -30,6 +46,14 @@ const Login = () => {
             {...register("password")}
           />
 
+          <TextField
+            id="confirm-password"
+            label="Confirm Your Password"
+            variant="outlined"
+            className="w-[400px]"
+            {...register("confirmPassword")}
+          />
+
           <Button
             type="submit"
             variant="contained"
@@ -38,14 +62,14 @@ const Login = () => {
               width: "400px",
             }}
           >
-            Sign in
+            Create Account
           </Button>
         </form>
 
         <p>
-          Don't Have Account?{" "}
-          <Link to="/signup" className="underline font-semibold">
-            Create your account
+          Have an account?{" "}
+          <Link to="/login" className="underline font-semibold">
+            Sign in here
           </Link>
         </p>
       </div>
@@ -53,4 +77,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
