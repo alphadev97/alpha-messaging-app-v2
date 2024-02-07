@@ -1,10 +1,7 @@
 import Logo from "../../components/Logo";
 import { Link } from "react-router-dom";
-import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
 import ThemeToggle from "../../lib/ThemeToggle";
-
-// ANTD
 
 import { MailOutlined, KeyOutlined } from "@ant-design/icons";
 import { Input } from "antd";
@@ -20,28 +17,22 @@ const Login = () => {
         <Logo />
 
         <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            size="large"
-            placeholder="Enter Your Email"
-            className="w-[400px] bg-[#F4EAE0] border-text flex items-center p-3"
-            prefix={
-              <MailOutlined className="bg-black p-2 text-[#F4EAE0] rounded-full mr-2" />
-            }
+          <input
+            className="w-[400px] bg-[#F4EAE0] rounded-md border-gray-400 flex items-center p-3"
+            type="text"
+            placeholder="Enter your email"
             {...register("email")}
           />
 
-          <Input
-            size="large"
-            placeholder="Enter Your Password"
-            className="w-[400px] bg-[#F4EAE0] border-text flex items-center p-3"
-            prefix={
-              <KeyOutlined className="bg-black p-2 text-[#F4EAE0] rounded-full mr-2" />
-            }
+          <input
+            className="w-[400px] bg-[#F4EAE0] rounded-md border-gray-400 flex items-center p-3"
+            type="text"
+            placeholder="Enter your password"
             {...register("password")}
           />
 
           <button
-            type="submite"
+            type="submit"
             className="bg-button text-buttonText w-full p-3 rounded-md "
           >
             Sign In

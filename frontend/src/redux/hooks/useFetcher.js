@@ -1,9 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
-import { setUser } from "../slices/userSlice";
+import { setTheme, setUser } from "../slices/userSlice";
 import { useCallback } from "react";
 
 const useFetcher = () => {
   const selectedUser = useSelector((state) => state.user.user);
+  const selectedTheme = useSelector((state) => state.user.theme);
 
   const dispatch = useDispatch();
 
@@ -14,7 +15,14 @@ const useFetcher = () => {
     [dispatch]
   );
 
-  return { selectedUser, setSelectedUser };
+  const setSelectedTheme = useCallback(
+    (data) => {
+      dispatch(setTheme(data));
+    },
+    [dispatch]
+  );
+
+  return { selectedUser, setSelectedUser, setSelectedTheme, selectedTheme };
 };
 
 export default useFetcher;

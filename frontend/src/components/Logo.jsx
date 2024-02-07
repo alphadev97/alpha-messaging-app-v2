@@ -1,14 +1,26 @@
-import React from "react";
-import AlphaMessageLogo from "../assets/AlphaMessege.png";
+import React, { useState, useEffect } from "react";
+import AlphaDark from "../assets/logo-dark.svg";
+import AlphaLight from "../assets/logo-light.svg";
+import useFetcher from "../redux/hooks/useFetcher";
 
 const Logo = () => {
+  const { selectedTheme } = useFetcher();
+
   return (
     <div>
-      <img
-        src={AlphaMessageLogo}
-        alt="Alpha Message Logo"
-        className="w-[400px] mb-5"
-      />
+      {selectedTheme === "light" ? (
+        <img
+          src={AlphaLight}
+          alt="Alpha Message Logo (Light Theme)"
+          className="w-[150px] mb-5"
+        />
+      ) : (
+        <img
+          src={AlphaDark}
+          alt="Alpha Message Logo (Dark Theme)"
+          className="w-[150px] mb-5"
+        />
+      )}
     </div>
   );
 };
