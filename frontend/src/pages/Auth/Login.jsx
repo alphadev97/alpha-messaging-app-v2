@@ -1,10 +1,6 @@
 import Logo from "../../components/Logo";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import ThemeToggle from "../../lib/ThemeToggle";
-
-import { MailOutlined, KeyOutlined } from "@ant-design/icons";
-import { Input } from "antd";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
@@ -13,7 +9,6 @@ const Login = () => {
   return (
     <div className="bg-background flex flex-col h-[100vh] w-full items-center">
       <div className="flex flex-col w-full h-full items-center justify-center gap-4">
-        <ThemeToggle />
         <Logo />
 
         <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useFetcher from "../redux/hooks/useFetcher";
+import sunImage from "../assets/sun.svg";
+import moonImage from "../assets/moon.svg";
 
 const ThemeToggle = () => {
   const { selectedTheme, setSelectedTheme } = useFetcher();
@@ -36,24 +38,31 @@ const ThemeToggle = () => {
   }, []);
 
   return (
-    <div>
-      <ul>
-        <li>
-          <button onClick={() => toggleTheme("light")}>Light Theme</button>
-        </li>
-        <li>
-          <button onClick={() => toggleTheme("dark")}>Dark Theme</button>
-        </li>
-        <li>
-          <button onClick={() => toggleTheme("theme2")}>Theme 2</button>
-        </li>
-        <li>
-          <button onClick={() => toggleTheme("theme3")}>Theme 3</button>
-        </li>
-        <li>
-          <button onClick={() => toggleTheme("theme4")}>Theme 4</button>
-        </li>
-      </ul>
+    <div className="bg-button flex justify-center items-center space-x-4 rounded-full p-1">
+      <button
+        className="focus:outline-none"
+        onClick={() => toggleTheme("light")}
+      >
+        <img
+          src={sunImage}
+          alt="Sun"
+          className={`w-8 h-8 transition duration-500 ${
+            theme === "light" ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      </button>
+      <button
+        className="focus:outline-none"
+        onClick={() => toggleTheme("dark")}
+      >
+        <img
+          src={moonImage}
+          alt="Moon"
+          className={`w-8 h-8 transition duration-500 ${
+            theme === "dark" ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      </button>
     </div>
   );
 };

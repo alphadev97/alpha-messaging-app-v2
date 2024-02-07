@@ -3,10 +3,12 @@ import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
 import Home from "./pages/Home/Home";
 import PrivateRoute from "./lib/PrivateRoute";
+import Header from "./components/Header";
 
 function App() {
   return (
     <Router>
+      <Header />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />

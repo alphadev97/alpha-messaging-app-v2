@@ -63,7 +63,7 @@ const Signup = () => {
           </button>
         </form>
 
-        <p>
+        <p className="text-text ">
           Have an account?{" "}
           <Link to="/login" className="underline font-semibold">
             Sign in here
