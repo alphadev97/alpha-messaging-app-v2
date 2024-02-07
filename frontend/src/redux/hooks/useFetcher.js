@@ -4,6 +4,7 @@ import { useCallback } from "react";
 
 const useFetcher = () => {
   const selectedUser = useSelector((state) => state.user.user);
+
   const dispatch = useDispatch();
 
   const setSelectedUser = useCallback(
