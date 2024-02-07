@@ -1,8 +1,13 @@
-import Logo from "../../components/Logo";
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+import Logo from "../../components/Logo";
+import EmailIcon from "@mui/icons-material/Email";
+import KeyIcon from "@mui/icons-material/Key";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => console.log(data);
 
@@ -12,19 +17,29 @@ const Login = () => {
         <Logo />
 
         <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
-          <input
-            className="w-[400px] bg-[#F4EAE0] rounded-md border-gray-400 flex items-center p-3"
-            type="text"
-            placeholder="Enter your email"
-            {...register("email")}
-          />
+          <div className="relative flex">
+            <EmailIcon className="text-black absolute top-4 left-2 text-2xl mr-2" />
+            <input
+              className="w-[400px] bg-[#F4EAE0] rounded-md border-gray-400 flex items-center pl-10 pt-4 pr-4 pb-4"
+              type="text"
+              placeholder="Enter your email"
+              {...register("email")}
+            />
+          </div>
 
-          <input
-            className="w-[400px] bg-[#F4EAE0] rounded-md border-gray-400 flex items-center p-3"
-            type="text"
-            placeholder="Enter your password"
-            {...register("password")}
-          />
+          <div className="relative flex">
+            <KeyIcon className="text-black absolute top-4 left-2 text-2xl mr-2" />
+            <input
+              className="w-[400px] bg-[#F4EAE0] rounded-md border-gray-400 flex items-center pl-10 pt-4 pr-4 pb-4"
+              type={showPassword ? "text" : "password"}
+              placeholder="Enter your password"
+              {...register("password")}
+            />
+            <RemoveRedEyeIcon
+              className="text-black absolute top-4 right-2 text-2xl mr-2 cursor-pointer"
+              onClick={() => setShowPassword(!showPassword)}
+            />
+          </div>
 
           <button
             type="submit"
