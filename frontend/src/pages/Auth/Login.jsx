@@ -29,7 +29,7 @@ const Login = () => {
       );
 
       const resData = await res.data;
-      setSelectedUser(resData);
+      // setSelectedUser(resData);
       navigate("/");
       toast.success("User logged in successfully!");
     } catch (error) {

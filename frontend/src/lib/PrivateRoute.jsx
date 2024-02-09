@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 
 const PrivateRoute = () => {
   const { selectedUser, setSelectedUser } = useFetcher();
+  console.log("first log user:", selectedUser);
   const navigate = useNavigate();
 
   const fetchUser = async () => {
@@ -16,6 +17,7 @@ const PrivateRoute = () => {
       );
 
       setSelectedUser(res.data);
+      console.log(selectedUser);
     } catch (error) {
       navigate("/login");
       toast.error(`${error.message}`);
