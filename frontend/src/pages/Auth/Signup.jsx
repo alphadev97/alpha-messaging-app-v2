@@ -8,6 +8,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import AbcIcon from "@mui/icons-material/Abc";
 import KeyIcon from "@mui/icons-material/Key";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import axios from "axios";
 
 const Signup = () => {
   const { register, handleSubmit } = useForm();
@@ -15,10 +16,39 @@ const Signup = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const navigate = useNavigate();
-  const onSubmit = (data) => {
-    console.log(data);
-    navigate("/login");
-    toast.success("user is created");
+
+  const onSubmit = async (data) => {
+    const { name, username, email, password } = data;
+
+    console.log("URL", import.meta.env.VITE_BACKEND_API_KEY);
+
+    if (password !== data.confirmPassword) {
+      toast.error("Password must be matched");
+      return;
+    }
+
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_API_KEY}/api/auth/signup`,
+        {
+          name,
+          username,
+          email,
+          password,
+        }
+      );
+
+      const resData = await res.data;
+
+      if (resData.success === true) {
+        navigate("/login");
+        toast.success("User is created");
+      }
+    } catch (error) {
+      if (error) {
+        toast.error(error.response.data.message);
+      }
+    }
   };
 
   return (
