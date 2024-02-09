@@ -5,11 +5,37 @@ import Logo from "../../components/Logo";
 import EmailIcon from "@mui/icons-material/Email";
 import KeyIcon from "@mui/icons-material/Key";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import axios from "axios";
+import { toast } from "react-toastify";
+import useFetcher from "../../redux/hooks/useFetcher";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const { setSelectedUser, selectedUser } = useFetcher();
+  console.log(selectedUser);
+
+  const onSubmit = async (data) => {
+    const { email, password } = data;
+
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_API_KEY}/api/auth/signin`,
+        {
+          email,
+          password,
+        }
+      );
+
+      const resData = await res.data;
+
+      console.log(resData);
+    } catch (error) {
+      if (error) {
+        toast.error(error.response.data.message);
+      }
+    }
+  };
 
   return (
     <div className="bg-background flex flex-col h-[100vh] w-full items-center">
