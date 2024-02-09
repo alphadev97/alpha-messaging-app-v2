@@ -24,7 +24,8 @@ const Login = () => {
         {
           email,
           password,
-        }
+        },
+        { withCredentials: true }
       );
 
       const resData = await res.data;
