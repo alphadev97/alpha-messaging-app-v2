@@ -20,7 +20,7 @@ const PrivateRoute = () => {
       console.log(selectedUser);
     } catch (error) {
       navigate("/login");
-      toast.error(`${error.message}`);
+      toast.success("Please login to continue!");
     }
   };
 

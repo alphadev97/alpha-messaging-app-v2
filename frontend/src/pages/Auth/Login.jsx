@@ -28,8 +28,9 @@ const Login = () => {
         { withCredentials: true }
       );
 
-      const resData = await res.data;
+      const resData = res.userId;
       // setSelectedUser(resData);
+      // console.log("Login CHAY", selectedUser);
       navigate("/");
       toast.success("User logged in successfully!");
     } catch (error) {
