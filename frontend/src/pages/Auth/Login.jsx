@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../components/Logo";
 import EmailIcon from "@mui/icons-material/Email";
 import KeyIcon from "@mui/icons-material/Key";
@@ -13,7 +13,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { register, handleSubmit } = useForm();
   const { setSelectedUser, selectedUser } = useFetcher();
-  console.log(selectedUser);
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     const { email, password } = data;
@@ -28,8 +28,9 @@ const Login = () => {
       );
 
       const resData = await res.data;
-
-      console.log(resData);
+      setSelectedUser(resData);
+      navigate("/");
+      toast.success("User logged in successfully!");
     } catch (error) {
       if (error) {
         toast.error(error.response.data.message);
