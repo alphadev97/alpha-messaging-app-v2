@@ -24,6 +24,12 @@ const Header = () => {
         </div>
       )}
 
+      {!selectedUser && (
+        <div>
+          <p className="text-2xl font-semibold">AlphaMessenger</p>
+        </div>
+      )}
+
       <div className="w-[100px]">
         <ThemeToggle />
       </div>
