@@ -15,16 +15,11 @@ const Login = () => {
   const { setSelectedUser, selectedUser } = useFetcher();
   const navigate = useNavigate();
 
-  const redirectUserIfUserAvailable = () => {
+  useEffect(() => {
     if (selectedUser) {
-      console.log(selectedUser);
       navigate("/chat");
     }
-  };
-
-  useEffect(() => {
-    redirectUserIfUserAvailable();
-  }, []);
+  }, [selectedUser, navigate]);
 
   const onSubmit = async (data) => {
     const { email, password } = data;
@@ -39,7 +34,11 @@ const Login = () => {
         { withCredentials: true }
       );
 
+      console.log(res.data);
+
+      // Redirect to chat page after successful login
       navigate("/chat");
+
       toast.success("User logged in successfully!");
     } catch (error) {
       if (error) {

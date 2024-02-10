@@ -13,7 +13,7 @@ const Header = () => {
       {selectedUser && (
         <div>
           <p className="flex items-center gap-3">
-            <span class="text-2xl bg-gradient-to-r from-blue-600 via-pink-600 to-pink-400 inline-block text-transparent bg-clip-text">
+            <span className="text-2xl bg-gradient-to-r from-blue-600 via-pink-600 to-pink-400 inline-block text-transparent bg-clip-text">
               Greetings
             </span>
             👋{"  "}
