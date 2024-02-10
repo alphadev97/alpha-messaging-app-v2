@@ -6,6 +6,7 @@
   --background: 250, 246, 240;
   --text: 0, 0, 0;
   --button: 0, 0, 0;
+  --button-dark: 244, 223, 200;
   --button-text: 250, 246, 240;
 }
 
@@ -13,6 +14,7 @@
   --background: 0, 0, 0;
   --text: 250, 246, 240;
   --button: 250, 246, 240;
+  --button-dark: 162, 128, 91;
   --button-text: 0, 0, 0;
 }
 

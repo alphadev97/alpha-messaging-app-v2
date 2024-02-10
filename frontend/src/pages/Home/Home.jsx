@@ -1,9 +1,14 @@
-import React from "react";
+import useFetcher from "../../redux/hooks/useFetcher";
+import FriendsList from "../../components/FriendsList";
 
 const Home = () => {
+  const { selectedUser } = useFetcher();
+
   return (
     <div>
-      <h1>Home</h1>
+      <div className="w-[250px] h-full bg-background">
+        <FriendsList friendsList={selectedUser} />
+      </div>
     </div>
   );
 };

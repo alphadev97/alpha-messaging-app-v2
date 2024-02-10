@@ -7,6 +7,7 @@ export default {
         background: "rgba(var(--background))",
         text: "rgba(var(--text))",
         button: "rgba(var(--button))",
+        buttonDark: "rgba(var(--button-dark))",
         buttonText: "rgba(var(--button-text))",
       },
     },
