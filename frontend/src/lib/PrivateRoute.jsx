@@ -11,16 +11,21 @@ const PrivateRoute = () => {
 
   const fetchUser = async () => {
     try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_API_KEY}/api/user/view`,
-        { withCredentials: true }
-      );
+      if (!selectedUser) {
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_API_KEY}/api/user/view`,
+          { withCredentials: true }
+        );
 
-      setSelectedUser(res.data);
-      console.log(selectedUser);
+        setSelectedUser(res.data);
+        console.log(selectedUser);
+      }
     } catch (error) {
-      navigate("/login");
-      toast.success("Please login to continue!");
+      if (!selectedUser) {
+        // Check if user is not already logged in
+        navigate("/");
+        toast.success("Please login to continue!");
+      }
     }
   };
 
@@ -28,7 +33,7 @@ const PrivateRoute = () => {
     fetchUser();
   }, []);
 
-  return selectedUser ? <Outlet /> : <Navigate to={"/login"} />;
+  return selectedUser ? <Outlet /> : <Navigate to={"/"} />;
 };
 
 export default PrivateRoute;

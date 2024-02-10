@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../components/Logo";
@@ -15,6 +15,17 @@ const Login = () => {
   const { setSelectedUser, selectedUser } = useFetcher();
   const navigate = useNavigate();
 
+  const redirectUserIfUserAvailable = () => {
+    if (selectedUser) {
+      console.log(selectedUser);
+      navigate("/chat");
+    }
+  };
+
+  useEffect(() => {
+    redirectUserIfUserAvailable();
+  }, []);
+
   const onSubmit = async (data) => {
     const { email, password } = data;
 
@@ -28,10 +39,7 @@ const Login = () => {
         { withCredentials: true }
       );
 
-      const resData = res.userId;
-      // setSelectedUser(resData);
-      // console.log("Login CHAY", selectedUser);
-      navigate("/");
+      navigate("/chat");
       toast.success("User logged in successfully!");
     } catch (error) {
       if (error) {
