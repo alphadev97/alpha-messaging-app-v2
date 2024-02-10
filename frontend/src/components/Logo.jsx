@@ -12,13 +12,13 @@ const Logo = () => {
         <img
           src={AlphaLight}
           alt="Alpha Message Logo (Light Theme)"
-          className="w-[150px] mb-5"
+          className="w-[150px]"
         />
       ) : (
         <img
           src={AlphaDark}
           alt="Alpha Message Logo (Dark Theme)"
-          className="w-[150px] mb-5"
+          className="w-[150px]"
         />
       )}
     </div>
