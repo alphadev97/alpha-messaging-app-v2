@@ -21,7 +21,7 @@ const FriendsList = ({ friendsList: friends }) => {
   };
 
   return (
-    <div className="h-[90vh] p-2 flex flex-col justify-between items-center">
+    <div className="h-[100vh] pt-[80px] pr-2 pb-2 pl-2 flex flex-col justify-between items-center">
       <div className="flex flex-col gap-3 w-full">
         <UserCard
           name={friends.user.username}

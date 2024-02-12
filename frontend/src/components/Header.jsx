@@ -6,7 +6,7 @@ const Header = () => {
   const { selectedUser } = useFetcher();
 
   return (
-    <div className="bg-background text-text flex justify-between items-center p-2">
+    <div className="bg-background fixed w-full text-text flex justify-between items-center p-2 z-10">
       <div className="w-[60px]">
         <Logo />
       </div>
