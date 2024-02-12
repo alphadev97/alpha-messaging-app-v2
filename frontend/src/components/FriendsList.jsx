@@ -1,7 +1,25 @@
 import UserCard from "./UserCard";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import axios from "axios";
+import useFetcher from "../redux/hooks/useFetcher";
+import { toast } from "react-toastify";
 
 const FriendsList = ({ friendsList: friends }) => {
+  const { setSelectedUser } = useFetcher();
+
+  const handleSignOut = async () => {
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_API_KEY}/api/auth/signout`
+      );
+
+      setSelectedUser(null);
+      toast.success(res.data.message);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="h-[90vh] p-2 flex flex-col justify-between items-center">
       <div className="flex flex-col gap-3 w-full">
@@ -23,7 +41,10 @@ const FriendsList = ({ friendsList: friends }) => {
           </button>
         </div>
         <div className="flex bg-button p-2 rounded-md justify-center">
-          <button className="flex flex-row items-center gap-2">
+          <button
+            className="flex flex-row items-center gap-2"
+            onClick={handleSignOut}
+          >
             <PowerSettingsNewIcon className="text-buttonDark" />
             <p className="text-buttonDark">Logout</p>
           </button>
