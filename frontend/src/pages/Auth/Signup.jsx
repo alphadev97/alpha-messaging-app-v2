@@ -9,9 +9,14 @@ import AbcIcon from "@mui/icons-material/Abc";
 import KeyIcon from "@mui/icons-material/Key";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import axios from "axios";
+import InputError from "../../components/InputError";
 
 const Signup = () => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -28,22 +33,23 @@ const Signup = () => {
     }
 
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_API_KEY}/api/auth/signup`,
-        {
-          name,
-          username,
-          email,
-          password,
-        }
-      );
+      console.log(data);
+      // const res = await axios.post(
+      //   `${import.meta.env.VITE_BACKEND_API_KEY}/api/auth/signup`,
+      //   {
+      //     name,
+      //     username,
+      //     email,
+      //     password,
+      //   }
+      // );
 
-      const resData = await res.data;
+      // const resData = await res.data;
 
-      if (resData.success === true) {
-        navigate("/login");
-        toast.success("User is created");
-      }
+      // if (resData.success === true) {
+      //   navigate("/login");
+      //   toast.success("User is created");
+      // }
     } catch (error) {
       if (error) {
         toast.error(error.response.data.message);
@@ -57,34 +63,43 @@ const Signup = () => {
         <Logo />
 
         <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
-          <div className="relative flex">
+          <div className="relative flex flex-col">
             <AbcIcon className="text-black absolute top-4 left-2 text-2xl mr-2" />
             <input
               className="w-[400px] bg-[#F4EAE0] rounded-md border-gray-400 flex items-center pl-10 pt-4 pr-4 pb-4"
               type="text"
               placeholder="Enter your name"
-              {...register("name")}
+              {...register("name", { required: true })}
             />
+            {errors.name?.type === "required" && (
+              <InputError message={"Name is required!"} />
+            )}
           </div>
 
-          <div className="relative flex">
+          <div className="relative flex flex-col">
             <AbcIcon className="text-black absolute top-4 left-2 text-2xl mr-2" />
             <input
               className="w-[400px] bg-[#F4EAE0] rounded-md border-gray-400 flex items-center pl-10 pt-4 pr-4 pb-4"
               type="text"
               placeholder="Enter your username"
-              {...register("username")}
+              {...register("username", { required: true })}
             />
+            {errors.username?.type === "required" && (
+              <InputError message={"Username is required!"} />
+            )}
           </div>
 
-          <div className="relative flex">
+          <div className="relative flex flex-col">
             <EmailIcon className="text-black absolute top-4 left-2 text-2xl mr-2" />
             <input
               className="w-[400px] bg-[#F4EAE0] rounded-md border-gray-400 flex items-center pl-10 pt-4 pr-4 pb-4"
               type="text"
               placeholder="Enter your email"
-              {...register("email")}
+              {...register("email", { required: true })}
             />
+            {errors.email?.type === "required" && (
+              <InputError message={"Email is required!"} />
+            )}
           </div>
 
           <div className="relative flex">
